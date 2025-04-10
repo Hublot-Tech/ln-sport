@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from "next/link";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookF, faTwitter, faYoutube, faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faMapMarkerAlt, faPhoneAlt, faEnvelope } from '@fortawesome/free-solid-svg-icons'
@@ -9,6 +10,16 @@ export default function ContactPage() {
     <>
       <main className="min-h-screen">
         <div className="">
+            <div className="ml-60 mt-10">
+                <div className="breadcrumbs text-sm">
+                    <ul>
+                        <li>
+                            <Link href="/">Home</Link>
+                        </li>
+                        <li>Score en direct </li>
+                    </ul>
+                </div>
+            </div>
             <h1 className='text-center text-[#F3653D] text-4xl mt-[5rem] font-bold'>CONTACT US</h1>
             <p className='md:mx-[15rem] mx-[5rem] text-justify mt-8'>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. 

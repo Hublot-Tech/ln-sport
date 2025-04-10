@@ -7,6 +7,7 @@ import { scoreRouter } from "./routers/score";
 import { newsRouter } from "./routers/news";
 import { articleRouter } from "./routers/article";
 import { highlightRouter } from "./routers/highlight";
+import { publiciteRouter } from "./routers/publicite";
 
 /**
  * This is the primary router for your server.
@@ -19,6 +20,7 @@ export const appRouter = createTRPCRouter({
   news: newsRouter,
   article: articleRouter,
   highlight: highlightRouter,
+  publicite: publiciteRouter,
 });
 
 // export type definition of API
