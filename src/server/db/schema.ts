@@ -289,3 +289,17 @@ export const ecommerceArticles = createTable("ecommerce_articles", {
     () => new Date(),
   ),
 });
+
+export const publicities = createTable("publicities", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: text("title").notNull(),
+  description: text("description"),
+  referenceUrl: varchar("reference_url", { length: 255 }), // Url of the publicity 
+  imageUrl: varchar("image_url", { length: 255 }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).$onUpdate(
+    () => new Date(),
+  ),
+});
