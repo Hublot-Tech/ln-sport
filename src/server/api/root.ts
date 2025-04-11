@@ -8,7 +8,7 @@ import { ecommerceArticleRouter } from "./routers/article";
 import { highlightRouter } from "./routers/highlight";
 import { leaguesRouter } from "./routers/leagues";
 import { publicitiesRouter } from "./routers/publicities";
-
+import { usersRouter } from "./routers/users";
 /**
  * This is the primary router for your server.
  *
@@ -21,6 +21,7 @@ export const appRouter = createTRPCRouter({
   highlights: highlightRouter,
   leagues: leaguesRouter,
   publicities: publicitiesRouter,
+  users: usersRouter,
 });
 
 // export type definition of API

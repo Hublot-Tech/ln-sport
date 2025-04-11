@@ -104,3 +104,59 @@ body {
     opacity: 1;
     transform: translate(0, 0);
 }
+
+.login-page {
+  @apply min-h-screen bg-gray-50 flex justify-center dark:bg-transparent
+}
+
+.login-card {
+  @apply w-full max-w-md p-6 space-y-6;
+}
+
+.login-title {
+  @apply text-3xl font-semibold;
+}
+
+.login-highlight {
+  @apply text-[#0D2648];
+}
+
+.login-description {
+  @apply text-sm text-center text-gray-600;
+}
+
+.idp-button {
+  @apply rounded-xl h-14 btn w-full border border-gray-300 text-gray-800 flex items-center justify-center gap-2;
+}
+
+.divider-text {
+  @apply divider text-gray-400 text-sm;
+}
+
+.form-input {
+  @apply rounded-xl h-14 input w-full border-gray-300 bg-transparent placeholder-gray-500 focus:outline-primary;
+}
+
+.form-link {
+  @apply text-sm text-primary hover:underline;
+}
+
+.form-error {
+  @apply alert alert-error text-sm;
+}
+
+.form-submit {
+  @apply rounded-xl h-14 btn bg-[#0D2648] text-white w-full;
+}
+
+.form-footer {
+  @apply text-sm text-center;
+}
+
+.form-footer-link {
+  @apply text-primary dark:text-primary font-semibold hover:underline;
+}
+
+.form-container {
+  @apply space-y-6;
+}

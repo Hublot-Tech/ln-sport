@@ -3,9 +3,7 @@ import {
   decimal,
   index,
   integer,
-  PgColumn,
   pgTableCreator,
-  PgTableWithColumns,
   primaryKey,
   text,
   timestamp,
@@ -34,6 +32,8 @@ export const users = createTable("users", {
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
+  password: varchar("password", { length: 255 }).notNull(),
+  role: varchar("role", { length: 255 }).notNull().default("user").$type<"user" | "admin">(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
