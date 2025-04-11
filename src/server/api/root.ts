@@ -7,6 +7,8 @@ import { newsArticleRouter } from "./routers/news";
 import { ecommerceArticleRouter } from "./routers/article";
 import { highlightRouter } from "./routers/highlight";
 import { leaguesRouter } from "./routers/leagues";
+import { publicitiesRouter } from "./routers/publicities";
+
 /**
  * This is the primary router for your server.
  *
@@ -18,6 +20,7 @@ export const appRouter = createTRPCRouter({
   articles: ecommerceArticleRouter,
   highlights: highlightRouter,
   leagues: leaguesRouter,
+  publicities: publicitiesRouter,
 });
 
 // export type definition of API
