@@ -1,4 +1,4 @@
-import Footer from "../../_components/Footer";
+import Footer from "@components/footer";
 import { formatDate } from "@ln-foot/utils";
 import { api, HydrateClient } from "@ln-foot/trpc/server";
 import { notFound } from "next/navigation";
@@ -8,7 +8,7 @@ interface UserPageProps {
   params: Promise<{ id: string }>;
 }
 export default async function HighlightPage({ params }: UserPageProps) {
-  const { highlight } = await api.highlight.findOne({
+  const highlight = await api.highlights.findOne({
     id: (await params).id,
   });
 
@@ -29,18 +29,18 @@ export default async function HighlightPage({ params }: UserPageProps) {
                 <li>
                   <Link href="/highlights">Highlights</Link>
                 </li>
-                <li>{highlight.title.slice(0, 20)}...</li>
+                <li>{highlight.title?.slice(0, 20)}...</li>
               </ul>
             </div>
             <h2 className="header-2">{highlight?.title}</h2>
           </div>
           <div className="grid gap-10">
             <video id="video1" controls>
-              <source src={highlight.videoRef} />
+              <source src={highlight.videoUrl ?? ""} />
               Your browser does not support HTML video.
             </video>
             <div className="p-4">
-              <p>{highlight && formatDate(highlight.publishedAt)}</p>
+              <p>{highlight && formatDate(highlight.publishedAt ?? new Date())}</p>
               <h3 className="card-title mb-2 text-lg font-semibold">
                 <Link
                   className="hover:underline"

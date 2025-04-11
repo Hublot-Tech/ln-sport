@@ -2,15 +2,9 @@
 import React, { useState } from "react";
 import { SectionTitle } from "../common/section-title";
 import Link from "next/link";
+import { type highlights as HighlightsTable } from "@server/db/schema";
 
-export interface Highlight {
-  id: string;
-  title: string;
-  videoRef: string;
-  description?: string;
-  thumbnail?: string;
-  publishedAt: Date;
-}
+export type Highlight = typeof HighlightsTable.$inferSelect;
 
 interface HighlightsProps {
   highlights: Highlight[];
@@ -58,14 +52,14 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({ highlight }) => {
             preload="metadata"
             aria-label={`Video for ${highlight.title}`}
           >
-            <source src={highlight.videoRef} type="video/mp4" />
+            <source src={highlight.videoUrl ?? ""} type="video/mp4" />
             Your browser does not support HTML video.
           </video>
         ) : (
           <div className="flex h-full w-full items-center justify-center">
-            {highlight.thumbnail ? (
+            {highlight.thumbnailUrl ? (
               <img
-                src={highlight.thumbnail}
+                src={highlight.thumbnailUrl ?? ""}
                 alt={`Thumbnail for ${highlight.title}`}
                 className="h-full w-full object-cover"
               />

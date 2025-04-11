@@ -1,4 +1,4 @@
-import Footer from "../../_components/Footer";
+import Footer from "../../_components/footer";
 import { formatDate } from "@ln-foot/utils";
 import { api, HydrateClient } from "@ln-foot/trpc/server";
 import { notFound } from "next/navigation";
@@ -8,7 +8,7 @@ interface UserPageProps {
   params: Promise<{ id: string }>;
 }
 export default async function NewsPage({ params }: UserPageProps) {
-  const { news: latestNews } = await api.news.findOne({
+  const latestNews = await api.news.findOne({
     id: (await params).id,
   });
 
@@ -39,13 +39,13 @@ export default async function NewsPage({ params }: UserPageProps) {
               <figure>
                 <img
                   style={{ width: "100%" }}
-                  src={latestNews?.imageRef ?? "/ln-icon.svg"}
+                  src={latestNews?.imageUrl ?? "/ln-icon.svg"}
                   alt="Football News"
                 />
               </figure>
               <div className="card-body px-0">
-                <p>{latestNews && formatDate(latestNews.posted_on)}</p>
-                <p>{latestNews.description}</p>
+                <p>{latestNews && formatDate(latestNews.publishedAt ?? new Date())}</p>
+                <p>{latestNews.summary}</p>
               </div>
             </div>
           </div>

@@ -1,13 +1,11 @@
 import { api, HydrateClient } from "@ln-foot/trpc/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Footer from "../_components/Footer";
-import { HighlightItem } from "../_components/landingSections/Highlights";
+import Footer from "../_components/footer";
+import { HighlightItem } from "../_components/sections/highlights";
 
 export default async function HighlightsPage() {
-  const {
-    highlights: [latestHighlight, ...highlights],
-  } = await api.highlight.latest();
+  const [latestHighlight, ...highlights] = await api.highlights.latest();
 
   if (!latestHighlight) {
     return notFound();
@@ -31,21 +29,16 @@ export default async function HighlightsPage() {
           <div className="grid gap-10">
             <div className="card gap-2">
               <video className="rounded-xl" id="video1" controls>
-                <source className="size-auto" src={latestHighlight.videoRef} />
+                <source className="size-auto" src={latestHighlight.videoUrl ?? ""} />
                 Your browser does not support HTML video.
               </video>
             </div>
           </div>
           <div className="divider"></div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[latestHighlight, ...highlights].map(
-              (highlight, index) => (
-                <HighlightItem
-                  key={`highlight-${index}`}
-                  highlight={highlight}
-                />
-              ),
-            )}
+            {[latestHighlight, ...highlights].map((highlight, index) => (
+              <HighlightItem key={`highlight-${index}`} highlight={highlight} />
+            ))}
           </div>
         </div>
       </section>

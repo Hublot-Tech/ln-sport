@@ -2,12 +2,10 @@ import { formatDate } from "@ln-foot/utils";
 import { api, HydrateClient } from "@ln-foot/trpc/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Footer from "../_components/Footer";
+import Footer from "../_components/footer";
 
 export default async function NewsPage() {
-  const {
-    news: [latestNews, ...news],
-  } = await api.news.latest();
+  const [latestNews, ...news] = await api.news.latest();
 
   if (!latestNews) {
     return notFound();
@@ -33,13 +31,13 @@ export default async function NewsPage() {
               <figure>
                 <img
                   style={{ width: "100%" }}
-                  src={latestNews?.imageRef ?? "/ln-icon.svg"}
+                  src={latestNews?.imageUrl ?? "/ln-icon.svg"}
                   alt="Football News"
                 />
               </figure>
               <div className="card-body px-0">
-                <p>{latestNews && formatDate(latestNews.posted_on)}</p>
-                <p>{latestNews.description}</p>
+                <p>{latestNews && formatDate(latestNews.publishedAt ?? new Date())}</p>
+                <p>{latestNews.summary}</p>
               </div>
             </div>
           </div>
@@ -51,12 +49,12 @@ export default async function NewsPage() {
                   <figure className="w-full">
                     <img
                       className="min-h-full min-w-full"
-                      src={actuality?.imageRef ?? "/ln-icon.svg"}
+                      src={actuality?.imageUrl ?? "/ln-icon.svg"}
                       alt="Football News"
                     />
                   </figure>
                   <div className="card-body px-0 py-4">
-                    <p>{formatDate(actuality.posted_on)}</p>
+                    <p>{formatDate(actuality.publishedAt ?? new Date())}</p>
                     <h2 className="link-hover link card-title">
                       <Link href={`/news/${actuality.id}`}>
                         {actuality.title}

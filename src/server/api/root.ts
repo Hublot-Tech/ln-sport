@@ -1,24 +1,23 @@
-import { postRouter } from "@ln-foot/server/api/routers/post";
 import {
   createCallerFactory,
   createTRPCRouter,
-} from "@ln-foot/server/api/trpc";
-import { scoreRouter } from "./routers/score";
-import { newsRouter } from "./routers/news";
-import { articleRouter } from "./routers/article";
+} from "@server/api/trpc";
+import { matchesRouter } from "./routers/matches";
+import { newsArticleRouter } from "./routers/news";
+import { ecommerceArticleRouter } from "./routers/article";
 import { highlightRouter } from "./routers/highlight";
-
+import { leaguesRouter } from "./routers/leagues";
 /**
  * This is the primary router for your server.
  *
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  post: postRouter,
-  score: scoreRouter,
-  news: newsRouter,
-  article: articleRouter,
-  highlight: highlightRouter,
+  matches: matchesRouter,
+  news: newsArticleRouter,
+  articles: ecommerceArticleRouter,
+  highlights: highlightRouter,
+  leagues: leaguesRouter,
 });
 
 // export type definition of API

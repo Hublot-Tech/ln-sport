@@ -2,15 +2,9 @@ import { formatDate } from "@ln-foot/utils";
 import React from "react";
 import { SectionTitle } from "../common/section-title";
 import Link from "next/link";
+import { type newsArticles as NewsArticlesTable } from "@server/db/schema";
 
-export type News = {
-  id: string;
-  title: string;
-  summary: string;
-  posted_on: Date;
-  imageRef: string;
-  description: string;
-};
+export type News = typeof NewsArticlesTable.$inferSelect;
 
 type NewsListProps = {
   actualities: News[];
@@ -23,12 +17,12 @@ const News: React.FC<{ actuality: News }> = ({ actuality }) => {
         <figure className="w-full">
           <img
             className="min-h-full min-w-full"
-            src={actuality?.imageRef ?? "/ln-icon.svg"}
+            src={actuality?.imageUrl ?? "/ln-icon.svg"}
             alt="Football News"
           />
         </figure>
         <div className="slide-in card-body px-0 sm:px-4">
-          <p className="">{formatDate(actuality.posted_on)}</p>
+          <p className="">{formatDate(actuality.publishedAt ?? new Date())}</p>
           <h2 className="link-hover link card-title">
             <Link href={`/news/${actuality.id}`}>{actuality.title}</Link>
           </h2>
@@ -51,12 +45,12 @@ const NewsList: React.FC<NewsListProps> = ({
             <figure className="fade-in w-full">
               <img
                 className="min-h-full min-w-full"
-                src={latestNews?.imageRef ?? "/ln-icon.svg"}
+                src={latestNews?.imageUrl ?? "/ln-icon.svg"}
                 alt="Football News"
               />
             </figure>
             <div className="slide-in card-body px-0 sm:px-4">
-              <p>{latestNews && formatDate(latestNews.posted_on)}</p>
+              <p>{latestNews && formatDate(latestNews.publishedAt ?? new Date())}</p>
               <h2 className="link-hover link card-title">
                 {latestNews?.title}
               </h2>

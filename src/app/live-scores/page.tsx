@@ -1,18 +1,16 @@
 import { api, HydrateClient } from "@ln-foot/trpc/server";
 import Link from "next/link";
 import { Fragment } from "react";
-import { LiveScore } from "../_components/landingSections/LiveScores";
+import { LiveScore } from "@components/sections/live-scores";
 
 export default async function LiveScoresPage() {
-  const { scores } = await api.score.latest();
-  const competitions = [
-    { label: "MTN ELITE ONE", scores: [...scores, ...scores] },
-    { label: "MTN ELITE TWO", scores },
-    { label: "MATCHS INTERNATIONAUX", scores: scores.slice(0, 2) },
-    { label: "LIGUE 1", scores: scores.slice(0, 1) },
-    { label: "PREMIER LEAGUE", scores: [...scores, ...scores, ...scores] },
-    { label: "BUNDESLIGA", scores: [] },
-  ];
+  const leagues = await api.leagues.list();
+  const competitions = leagues.map((league) => ({
+    id: league.id,
+    name: league.leagueName,
+    logoUrl: league.logoUrl ?? "",
+    scores: league.matches,
+  }));
 
   return (
     <HydrateClient>
@@ -51,13 +49,13 @@ export default async function LiveScoresPage() {
             </label>
           </div>
           <div className="tabs-border hidden md:tabs">
-            {competitions.map(({ label, scores }, i) => (
+            {competitions.map(({ name, scores }, i) => (
               <Fragment key={i}>
                 <input
                   type="radio"
                   name="competition"
                   className="tab"
-                  aria-label={label}
+                  aria-label={name}
                   defaultChecked={i === 0}
                 />
                 <div className="tab-content border-t-base-300 bg-base-100 p-10">
@@ -71,7 +69,7 @@ export default async function LiveScoresPage() {
             ))}
           </div>
           <div className="bg-base-10 join join-vertical block w-full md:hidden">
-            {competitions.map(({ label, scores }, i) => (
+            {competitions.map(({ name, logoUrl, scores }, i) => (
               <div
                 className="collapse join-item collapse-arrow border-base-300"
                 key={i}
@@ -79,10 +77,13 @@ export default async function LiveScoresPage() {
                 <input
                   type="radio"
                   name="competition"
-                  aria-label={label}
+                  aria-label={name}
                   defaultChecked={i == 0}
                 />
-                <div className="collapse-title font-semibold">{label}</div>
+                <div className="collapse-title font-semibold">
+                  <img src={logoUrl} alt={name} className="w-4 h-4" />
+                  {name}
+                </div>
                 <div className="collapse-content">
                   <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                     {scores.map((match, index) => (

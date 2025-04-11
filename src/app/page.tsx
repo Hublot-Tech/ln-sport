@@ -1,29 +1,23 @@
-import { auth } from "@ln-foot/server/auth";
+import ScrollAnimation from "@components/common/scoll-annimation";
+import Footer from "@components/footer";
+import Articles from "@components/sections/articles";
+import HeroSection from "@components/sections/hero-section";
+import Highlights from "@components/sections/highlights";
+import LiveScores from "@components/sections/live-scores";
+import NewsList from "@components/sections/news";
 import { api, HydrateClient } from "@ln-foot/trpc/server";
-import Footer from "./_components/Footer";
-import Articles from "./_components/landingSections/Articles";
-import HeroSection from "./_components/landingSections/HeroSection";
-import Highlights from "./_components/landingSections/Highlights";
-import LiveScores from "./_components/landingSections/LiveScores";
-import NewsList from "./_components/landingSections/News";
-import ScrollAnimation from "./_components/common/scoll-annimation";
 
 export default async function Home() {
-  const session = await auth();
-  if (session?.user) {
-    void api.post.getLatest.prefetch();
-  }
-
-  const { news } = await api.news.latest();
-  const { scores } = await api.score.latest();
-  const { articles } = await api.article.latest();
-  const { highlights } = await api.highlight.latest();
+  const news = await api.news.latest();
+  const scores = await api.matches.latest();
+  const articles = await api.articles.latest();
+  const highlights = await api.highlights.latest();
 
   return (
     <HydrateClient>
       <HeroSection title={"L'actualite du football en continu"} />
       <ScrollAnimation>
-        <LiveScores competition="MTN Elite One" scores={scores} />
+        <LiveScores competition="All" scores={scores} />
         <Highlights highlights={highlights} />
         <NewsList actualities={news} />
         <Articles articles={articles} />

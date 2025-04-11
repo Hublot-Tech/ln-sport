@@ -1,11 +1,7 @@
 import { SectionTitle } from "../common/section-title";
+import { type ecommerceArticles as EcommerceArticlesTable } from "@server/db/schema";
 
-export type Article = {
-  price: number;
-  title: string;
-  imageRef: string;
-  description: string;
-};
+export type Article = typeof EcommerceArticlesTable.$inferSelect;
 
 type ArticlesProps = {
   articles: Article[];
@@ -15,11 +11,11 @@ const Article: React.FC<{ article: Article }> = ({ article }) => {
   return (
     <div className="cursor-pointer card max-w-md">
       <figure>
-        <img src={article.imageRef} alt="Article" />
+        <img src={article.imageUrl ?? ""} alt="Article" />
       </figure>
       <div className="card-body px-0">
         <h2 className="card-title">{article.title}</h2>
-        <p>{article.description}</p>
+        <p>{article.summary}</p>
         <div className="card-actions">
           <button className="btn btn-outline w-full bg-base-secondary text-white">
             Acheter
