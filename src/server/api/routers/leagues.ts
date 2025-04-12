@@ -1,5 +1,9 @@
 import { db } from "@server/db";
-import { createTRPCRouter, publicProcedure } from "@server/api/trpc";
+import {
+  adminProcedure,
+  createTRPCRouter,
+  publicProcedure,
+} from "@server/api/trpc";
 import {
   leagues as LeaguesTable,
   type matches as MatchesTable,
@@ -35,5 +39,47 @@ export const leaguesRouter = createTRPCRouter({
         where: eq(LeaguesTable.id, input.id),
       });
       return league;
+    }),
+  createLeague: adminProcedure
+    .input(
+      z.object({
+        leagueName: z.string(),
+        country: z.string(),
+        tier: z.number().optional(),
+        apiSource: z.string().optional(),
+        apiLeagueId: z.string().optional(),
+        logoUrl: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const league = await db.insert(LeaguesTable).values({
+        ...input,
+      });
+      return league;
+    }),
+  updateLeague: adminProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        leagueName: z.string().optional(),
+        country: z.string().optional(),
+        tier: z.number().optional(),
+        apiSource: z.string().optional(),
+        apiLeagueId: z.string().optional(),
+        logoUrl: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const league = await db
+        .update(LeaguesTable)
+        .set({ ...input })
+        .where(eq(LeaguesTable.id, input.id));
+      return league;
+    }),
+  deleteLeague: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      await db.delete(LeaguesTable).where(eq(LeaguesTable.id, input.id));
+      return { success: true };
     }),
 });

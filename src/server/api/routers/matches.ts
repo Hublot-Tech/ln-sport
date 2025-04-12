@@ -1,4 +1,8 @@
-import { createTRPCRouter, publicProcedure } from "@server/api/trpc";
+import {
+  adminProcedure,
+  createTRPCRouter,
+  publicProcedure,
+} from "@server/api/trpc";
 import { db } from "@server/db";
 import { desc, eq, inArray } from "drizzle-orm";
 import {
@@ -43,5 +47,47 @@ export const matchesRouter = createTRPCRouter({
         where: eq(MatchesTable.id, input.id),
       });
       return match;
+    }),
+  createMatch: adminProcedure
+    .input(
+      z.object({
+        matchDatetime: z.date(),
+        team1Id: z.string(),
+        team2Id: z.string(),
+        leagueId: z.string(),
+        score1: z.number().optional().default(0),
+        score2: z.number().optional().default(0),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const match = await db.insert(MatchesTable).values({
+        ...input,
+      });
+      return match;
+    }),
+  updateMatch: adminProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        matchDatetime: z.date().optional(),
+        team1Id: z.string().optional(),
+        team2Id: z.string().optional(),
+        leagueId: z.string().optional(),
+        score1: z.number().optional(),
+        score2: z.number().optional(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      const match = await db
+        .update(MatchesTable)
+        .set({ ...input })
+        .where(eq(MatchesTable.id, input.id));
+      return match;
+    }),
+  deleteMatch: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      await db.delete(MatchesTable).where(eq(MatchesTable.id, input.id));
+      return { success: true };
     }),
 });
