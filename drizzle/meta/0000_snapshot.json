@@ -1,11 +1,11 @@
 {
-  "id": "4f9e5ece-1762-479e-9665-0fe2caad6039",
+  "id": "f877900b-372e-4bae-a634-8483317ff30d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.ln-foot_accounts": {
-      "name": "ln-foot_accounts",
+    "public.lnfoot_accounts": {
+      "name": "lnfoot_accounts",
       "schema": "",
       "columns": {
         "user_id": {
@@ -93,10 +93,10 @@
         }
       },
       "foreignKeys": {
-        "ln-foot_accounts_user_id_ln-foot_users_id_fk": {
-          "name": "ln-foot_accounts_user_id_ln-foot_users_id_fk",
-          "tableFrom": "ln-foot_accounts",
-          "tableTo": "ln-foot_users",
+        "lnfoot_accounts_user_id_lnfoot_users_id_fk": {
+          "name": "lnfoot_accounts_user_id_lnfoot_users_id_fk",
+          "tableFrom": "lnfoot_accounts",
+          "tableTo": "lnfoot_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -108,8 +108,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "ln-foot_accounts_provider_provider_account_id_pk": {
-          "name": "ln-foot_accounts_provider_provider_account_id_pk",
+        "lnfoot_accounts_provider_provider_account_id_pk": {
+          "name": "lnfoot_accounts_provider_provider_account_id_pk",
           "columns": [
             "provider",
             "provider_account_id"
@@ -118,8 +118,8 @@
       },
       "uniqueConstraints": {}
     },
-    "public.ln-foot_ecommerce_articles": {
-      "name": "ln-foot_ecommerce_articles",
+    "public.lnfoot_ecommerce_articles": {
+      "name": "lnfoot_ecommerce_articles",
       "schema": "",
       "columns": {
         "id": {
@@ -196,8 +196,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_highlights": {
-      "name": "ln-foot_highlights",
+    "public.lnfoot_highlights": {
+      "name": "lnfoot_highlights",
       "schema": "",
       "columns": {
         "id": {
@@ -271,10 +271,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ln-foot_highlights_match_id_ln-foot_matches_id_fk": {
-          "name": "ln-foot_highlights_match_id_ln-foot_matches_id_fk",
-          "tableFrom": "ln-foot_highlights",
-          "tableTo": "ln-foot_matches",
+        "lnfoot_highlights_match_id_lnfoot_matches_id_fk": {
+          "name": "lnfoot_highlights_match_id_lnfoot_matches_id_fk",
+          "tableFrom": "lnfoot_highlights",
+          "tableTo": "lnfoot_matches",
           "columnsFrom": [
             "match_id"
           ],
@@ -288,8 +288,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_leagues": {
-      "name": "ln-foot_leagues",
+    "public.lnfoot_leagues": {
+      "name": "lnfoot_leagues",
       "schema": "",
       "columns": {
         "id": {
@@ -357,10 +357,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ln-foot_leagues_sport_id_ln-foot_sport_id_fk": {
-          "name": "ln-foot_leagues_sport_id_ln-foot_sport_id_fk",
-          "tableFrom": "ln-foot_leagues",
-          "tableTo": "ln-foot_sport",
+        "lnfoot_leagues_sport_id_lnfoot_sport_id_fk": {
+          "name": "lnfoot_leagues_sport_id_lnfoot_sport_id_fk",
+          "tableFrom": "lnfoot_leagues",
+          "tableTo": "lnfoot_sport",
           "columnsFrom": [
             "sport_id"
           ],
@@ -374,8 +374,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_matches": {
-      "name": "ln-foot_matches",
+    "public.lnfoot_matches": {
+      "name": "lnfoot_matches",
       "schema": "",
       "columns": {
         "id": {
@@ -455,10 +455,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ln-foot_matches_league_id_ln-foot_leagues_id_fk": {
-          "name": "ln-foot_matches_league_id_ln-foot_leagues_id_fk",
-          "tableFrom": "ln-foot_matches",
-          "tableTo": "ln-foot_leagues",
+        "lnfoot_matches_league_id_lnfoot_leagues_id_fk": {
+          "name": "lnfoot_matches_league_id_lnfoot_leagues_id_fk",
+          "tableFrom": "lnfoot_matches",
+          "tableTo": "lnfoot_leagues",
           "columnsFrom": [
             "league_id"
           ],
@@ -468,10 +468,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "ln-foot_matches_team1_id_ln-foot_teams_id_fk": {
-          "name": "ln-foot_matches_team1_id_ln-foot_teams_id_fk",
-          "tableFrom": "ln-foot_matches",
-          "tableTo": "ln-foot_teams",
+        "lnfoot_matches_team1_id_lnfoot_teams_id_fk": {
+          "name": "lnfoot_matches_team1_id_lnfoot_teams_id_fk",
+          "tableFrom": "lnfoot_matches",
+          "tableTo": "lnfoot_teams",
           "columnsFrom": [
             "team1_id"
           ],
@@ -481,10 +481,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "ln-foot_matches_team2_id_ln-foot_teams_id_fk": {
-          "name": "ln-foot_matches_team2_id_ln-foot_teams_id_fk",
-          "tableFrom": "ln-foot_matches",
-          "tableTo": "ln-foot_teams",
+        "lnfoot_matches_team2_id_lnfoot_teams_id_fk": {
+          "name": "lnfoot_matches_team2_id_lnfoot_teams_id_fk",
+          "tableFrom": "lnfoot_matches",
+          "tableTo": "lnfoot_teams",
           "columnsFrom": [
             "team2_id"
           ],
@@ -498,8 +498,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_news_articles": {
-      "name": "ln-foot_news_articles",
+    "public.lnfoot_news_articles": {
+      "name": "lnfoot_news_articles",
       "schema": "",
       "columns": {
         "id": {
@@ -576,8 +576,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_odds": {
-      "name": "ln-foot_odds",
+    "public.lnfoot_odds": {
+      "name": "lnfoot_odds",
       "schema": "",
       "columns": {
         "id": {
@@ -645,10 +645,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ln-foot_odds_match_id_ln-foot_matches_id_fk": {
-          "name": "ln-foot_odds_match_id_ln-foot_matches_id_fk",
-          "tableFrom": "ln-foot_odds",
-          "tableTo": "ln-foot_matches",
+        "lnfoot_odds_match_id_lnfoot_matches_id_fk": {
+          "name": "lnfoot_odds_match_id_lnfoot_matches_id_fk",
+          "tableFrom": "lnfoot_odds",
+          "tableTo": "lnfoot_matches",
           "columnsFrom": [
             "match_id"
           ],
@@ -662,8 +662,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_publicities": {
-      "name": "ln-foot_publicities",
+    "public.lnfoot_publicities": {
+      "name": "lnfoot_publicities",
       "schema": "",
       "columns": {
         "id": {
@@ -716,8 +716,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_sessions": {
-      "name": "ln-foot_sessions",
+    "public.lnfoot_sessions": {
+      "name": "lnfoot_sessions",
       "schema": "",
       "columns": {
         "session_token": {
@@ -757,10 +757,10 @@
         }
       },
       "foreignKeys": {
-        "ln-foot_sessions_user_id_ln-foot_users_id_fk": {
-          "name": "ln-foot_sessions_user_id_ln-foot_users_id_fk",
-          "tableFrom": "ln-foot_sessions",
-          "tableTo": "ln-foot_users",
+        "lnfoot_sessions_user_id_lnfoot_users_id_fk": {
+          "name": "lnfoot_sessions_user_id_lnfoot_users_id_fk",
+          "tableFrom": "lnfoot_sessions",
+          "tableTo": "lnfoot_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -774,8 +774,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_sport": {
-      "name": "ln-foot_sport",
+    "public.lnfoot_sport": {
+      "name": "lnfoot_sport",
       "schema": "",
       "columns": {
         "id": {
@@ -809,8 +809,8 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "ln-foot_sport_sport_name_unique": {
-          "name": "ln-foot_sport_sport_name_unique",
+        "lnfoot_sport_sport_name_unique": {
+          "name": "lnfoot_sport_sport_name_unique",
           "nullsNotDistinct": false,
           "columns": [
             "sport_name"
@@ -818,8 +818,8 @@
         }
       }
     },
-    "public.ln-foot_teams": {
-      "name": "ln-foot_teams",
+    "public.lnfoot_teams": {
+      "name": "lnfoot_teams",
       "schema": "",
       "columns": {
         "id": {
@@ -875,10 +875,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ln-foot_teams_league_id_ln-foot_leagues_id_fk": {
-          "name": "ln-foot_teams_league_id_ln-foot_leagues_id_fk",
-          "tableFrom": "ln-foot_teams",
-          "tableTo": "ln-foot_leagues",
+        "lnfoot_teams_league_id_lnfoot_leagues_id_fk": {
+          "name": "lnfoot_teams_league_id_lnfoot_leagues_id_fk",
+          "tableFrom": "lnfoot_teams",
+          "tableTo": "lnfoot_leagues",
           "columnsFrom": [
             "league_id"
           ],
@@ -892,8 +892,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_user_favorites": {
-      "name": "ln-foot_user_favorites",
+    "public.lnfoot_user_favorites": {
+      "name": "lnfoot_user_favorites",
       "schema": "",
       "columns": {
         "user_id": {
@@ -918,10 +918,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "ln-foot_user_favorites_user_id_ln-foot_users_id_fk": {
-          "name": "ln-foot_user_favorites_user_id_ln-foot_users_id_fk",
-          "tableFrom": "ln-foot_user_favorites",
-          "tableTo": "ln-foot_users",
+        "lnfoot_user_favorites_user_id_lnfoot_users_id_fk": {
+          "name": "lnfoot_user_favorites_user_id_lnfoot_users_id_fk",
+          "tableFrom": "lnfoot_user_favorites",
+          "tableTo": "lnfoot_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -931,10 +931,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "ln-foot_user_favorites_match_id_ln-foot_matches_id_fk": {
-          "name": "ln-foot_user_favorites_match_id_ln-foot_matches_id_fk",
-          "tableFrom": "ln-foot_user_favorites",
-          "tableTo": "ln-foot_matches",
+        "lnfoot_user_favorites_match_id_lnfoot_matches_id_fk": {
+          "name": "lnfoot_user_favorites_match_id_lnfoot_matches_id_fk",
+          "tableFrom": "lnfoot_user_favorites",
+          "tableTo": "lnfoot_matches",
           "columnsFrom": [
             "match_id"
           ],
@@ -946,8 +946,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "ln-foot_user_favorites_user_id_match_id_pk": {
-          "name": "ln-foot_user_favorites_user_id_match_id_pk",
+        "lnfoot_user_favorites_user_id_match_id_pk": {
+          "name": "lnfoot_user_favorites_user_id_match_id_pk",
           "columns": [
             "user_id",
             "match_id"
@@ -956,8 +956,8 @@
       },
       "uniqueConstraints": {}
     },
-    "public.ln-foot_users": {
-      "name": "ln-foot_users",
+    "public.lnfoot_users": {
+      "name": "lnfoot_users",
       "schema": "",
       "columns": {
         "id": {
@@ -990,6 +990,19 @@
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
+        },
+        "password": {
+          "name": "password",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'user'"
         }
       },
       "indexes": {},
@@ -997,8 +1010,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.ln-foot_verification_token": {
-      "name": "ln-foot_verification_token",
+    "public.lnfoot_verification_token": {
+      "name": "lnfoot_verification_token",
       "schema": "",
       "columns": {
         "identifier": {
@@ -1023,8 +1036,8 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "ln-foot_verification_token_identifier_token_pk": {
-          "name": "ln-foot_verification_token_identifier_token_pk",
+        "lnfoot_verification_token_identifier_token_pk": {
+          "name": "lnfoot_verification_token_identifier_token_pk",
           "columns": [
             "identifier",
             "token"

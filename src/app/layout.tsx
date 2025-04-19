@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "@ln-foot/trpc/react";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Ln Foot",
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html data-theme="light" lang="fr" className={`${GeistSans.variable}`}>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <SessionProvider>{children}</SessionProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );

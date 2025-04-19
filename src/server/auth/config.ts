@@ -1,16 +1,15 @@
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 
-import { db } from "@ln-foot/server/db";
+import { db } from "@server/db";
 import {
   accounts,
   sessions,
   users,
   verificationTokens,
-} from "@ln-foot/server/db/schema";
-import GoogleProvider from "next-auth/providers/google";
+} from "@server/db/schema";
 import { env } from "@ln-foot/env";
-
+import KeycloakProvider from "next-auth/providers/keycloak";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -38,10 +37,7 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    }),
+    KeycloakProvider({ issuer: env.KEYCLOAK_ISSUER, clientId: env.KEYCLOAK_ID }),
     /**
      * ...add more providers here.
      *
@@ -59,12 +55,15 @@ export const authConfig = {
     verificationTokensTable: verificationTokens,
   }),
   callbacks: {
-    session: ({ session, user }) => ({
-      ...session,
-      user: {
-        ...session.user,
-        id: user.id,
-      },
-    }),
+    jwt: ({ token, account }) => {
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
   },
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET
 } satisfies NextAuthConfig;

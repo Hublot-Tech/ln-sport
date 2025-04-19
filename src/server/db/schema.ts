@@ -18,7 +18,7 @@ import { type AdapterAccount } from "next-auth/adapters";
  *
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
-export const createTable = pgTableCreator((name) => `ln-foot_${name}`);
+export const createTable = pgTableCreator((name) => `lnfoot_${name}`);
 
 export const users = createTable("users", {
   id: varchar("id", { length: 255 })
@@ -32,7 +32,7 @@ export const users = createTable("users", {
     withTimezone: true,
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
-  password: varchar("password", { length: 255 }).notNull(),
+  password: varchar("password", { length: 255 }),
   role: varchar("role", { length: 255 }).notNull().default("user").$type<"user" | "admin">(),
 });
 

@@ -1,26 +1,23 @@
-"use client";
-
 import React from "react";
 import type { IdentityProvider } from "@ln-foot/types";
 
 interface Props {
   identityProviders: IdentityProvider[];
-  loginAction: string;
+  loginAction: () => Promise<void>;
 }
 
 const IdentityProviderButtons: React.FC<Props> = ({
   identityProviders,
   loginAction,
 }) => (
-  <>
+  <form
+    action={loginAction}
+  >
     {identityProviders.map((idp) => (
       <button
         key={idp.alias}
-        type="button"
+        type="submit"
         className="idp-button"
-        onClick={() =>
-          (window.location.href = `${loginAction}?kc_idp=${idp.alias}`)
-        }
       >
         <img
           src={`/assets/${idp.alias}.svg`}
@@ -30,7 +27,7 @@ const IdentityProviderButtons: React.FC<Props> = ({
         {idp.displayName}
       </button>
     ))}
-  </>
+  </form>
 );
 
 export default IdentityProviderButtons;

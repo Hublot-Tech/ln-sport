@@ -11,14 +11,15 @@ export const env = createEnv({
       process.env.NODE_ENV === "production"
         ? z.string()
         : z.string().optional(),
-    GOOGLE_CLIENT_ID: z.string(),
-    GOOGLE_CLIENT_SECRET: z.string(),
     DATABASE_URL: z.string().url(),
+    DATABASE_SCHEMA: z.string().default("landing"),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
     ADMIN_EMAIL: z.string(),
     ADMIN_PASSWORD: z.string(),
+    KEYCLOAK_ID: z.string(),
+    KEYCLOAK_ISSUER: z.string(),
   },
 
   /**
@@ -36,12 +37,13 @@ export const env = createEnv({
    */
   runtimeEnv: {
     AUTH_SECRET: process.env.AUTH_SECRET,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_SCHEMA: process.env.DATABASE_SCHEMA,
     NODE_ENV: process.env.NODE_ENV,
     ADMIN_EMAIL: process.env.ADMIN_EMAIL,
     ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
+    KEYCLOAK_ID: process.env.KEYCLOAK_ID,
+    KEYCLOAK_ISSUER: process.env.KEYCLOAK_ISSUER,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

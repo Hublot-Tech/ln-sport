@@ -1,75 +1,32 @@
-// app/login/page.tsx
-import IdentityProviderButtons from "@components/common/idp-buttons";
-import LoginForm from "@components/login";
+'use client';
 
-async function getMetadata() {
-  const locale = "fr";
+import { signIn, signOut, useSession } from "next-auth/react";
 
-  const messages = {
-    loginTitle: "Se connecter",
-    loginAccountTitle: "Connexion à votre compte",
-    usernameOrEmail: "Adresse email ou nom d’utilisateur",
-    password: "Mot de passe",
-    doForgotPassword: "Mot de passe oublié ?",
-    doLogIn: "Se connecter",
-    noAccount: "Vous n'avez pas de compte ?",
-    doRegister: "S’inscrire",
-  };
+export default function AuthButton() {
+  const { data: session, status } = useSession();
 
-  const url = {
-    oauth2LoginUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-    loginAction: "/api/auth/login",
-    loginResetCredentialsUrl: "/reset-password",
-    registrationUrl: "/register",
-  };
+  if (status === "loading") return <p className="text-center mt-10">Loading...</p>;
 
-  const identityProviders = [{ alias: "google", displayName: "Google" }];
-
-  const login = {
-    username: "",
-  };
-
-  const message = {
-    summary: "",
-  };
-
-  return {
-    locale,
-    messages,
-    url,
-    identityProviders,
-    login,
-    message,
-  };
-}
-
-export default async function LoginPage() {
-  const { messages, url, identityProviders, login, message } =
-    await getMetadata();
   return (
-    <body className="login-page">
-      <div className="login-card">
-        <h1 className="login-title">
-          <span className="login-highlight">{messages.loginAccountTitle}</span>.
-        </h1>
-
-        {identityProviders.length > 0 && (
-          <>
-            <IdentityProviderButtons
-              identityProviders={identityProviders}
-              loginAction={url.oauth2LoginUrl}
-            />
-            <div className="divider-text">or</div>
-          </>
-        )}
-
-        <LoginForm
-          url={url}
-          messages={messages}
-          login={login}
-          errorMessage={message?.summary}
-        />
-      </div>
-    </body>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#161b22]">
+      {session ? (
+        <div className="text-center space-y-4">
+          <p className="text-gray-100 text-xl">Welcome {session.user?.name}</p>
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className="bg-red-600 text-white px-6 py-2 rounded shadow"
+          >
+            Sign Out
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={() => signIn("keycloak")}
+          className="bg-[#0d1117] text-white px-6 py-2 rounded shadow"
+        >
+          Sign in with Keycloak
+        </button>
+      )}
+    </div>
   );
 }
