@@ -33,16 +33,6 @@ body {
     @apply flex justify-between text-base-secondary items-center
 }
 
-#hero-section {
-    background-image: url("/hero-image.png");
-    height: 70vh;
-    /* Create a parallax effect */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
 /* Add this overlay pseudo-element */
 #hero-section::before {
     content: "";
@@ -159,4 +149,21 @@ body {
 
 .form-container {
   @apply space-y-6;
+}
+
+/* Add this to your global CSS file for the animation */
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.bg-animate {
+  animation: gradient 5s ease infinite;
 }

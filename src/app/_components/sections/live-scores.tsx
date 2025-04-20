@@ -33,7 +33,7 @@ const LiveScores: React.FC<LiveScoresProps> = ({ competition, scores }) => {
   return (
     <section className="section bg-transparent p-4">
       <SectionTitle title="Scores en direct" pageRef="/live-scores" />
-      <h3 className="mb-4 cursor-pointer bg-blue-900 p-4 text-3xl font-semibold uppercase text-white">
+      <h3 className="mb-4 cursor-pointer bg-[#0D2648] p-4 text-3xl font-semibold uppercase text-white">
         {competition}
       </h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">

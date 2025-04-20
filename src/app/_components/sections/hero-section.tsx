@@ -9,14 +9,19 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title }) => {
   return (
     <section
       id="hero-section"
-      className="relative flex h-3/5 flex-col justify-center gap-4 text-center text-white"
+      style={{
+        backgroundImage: "url(/hero-image.png)",
+      }}
+      className="relative flex h-4/5 flex-col justify-center bg-contain bg-center text-center text-white"
     >
-      <Header />
-      <div className="relative flex h-2/3 flex-col items-center justify-center">
-        <h2 className="text-4xl font-bold uppercase">{title}</h2>
-        <button className="mt-4 w-fit rounded-full bg-orange-500 px-6 py-2">
-          En savoir plus
-        </button>
+      <div className="animate-gradient bg-animate h-full gap-4 bg-gradient-to-r sm:from-blue-900/20 sm:to-blue-950/80 from-blue-900 to-blue-950/80 p-5">
+        <Header />
+        <div className="relative flex h-2/3 flex-col items-center justify-center gap-4">
+          <h2 className="text-4xl font-bold uppercase">{title}</h2>
+          <button className="rounded-lg btn bg-[#F3653D] hover:bg-[#F3653D]/95 text-white">
+            En savoir plus
+          </button>
+        </div>
       </div>
     </section>
   );
