@@ -27,7 +27,7 @@
     "baseUrl": ".",
     "paths": {
       "@ln-foot/*": ["./src/*"],
-      "@server/*": ["./src/server/*"],
+      "@/server/*": ["./src/server/*"],
       "@components/*": ["./src/app/_components/*"]
     }
   },
@@ -39,6 +39,6 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts"
-, "src/env.js"  ],
+  ],
   "exclude": ["node_modules"]
 }

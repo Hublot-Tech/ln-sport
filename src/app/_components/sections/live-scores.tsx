@@ -1,14 +1,13 @@
 import React from "react";
 import { SectionTitle } from "../common/section-title";
-import type { matches as MatchesTable } from "@server/db/schema";
+import type { Match } from "@ln-foot/api/types";
+import { apiClient } from "@ln-foot/api/client";
 
-export type Score = typeof MatchesTable.$inferSelect;
 type LiveScoresProps = {
   competition: string;
-  scores: Score[];
 };
 
-const LiveScore: React.FC<{ match: Score }> = ({ match }) => {
+export const LiveScore: React.FC<{ match: Match }> = ({ match }) => {
   return (
     <div
       className={`grid ${match.status !== "over" ? "animate-pulse" : ""} rounded-lg border bg-[#F1F0F0] p-4`}
@@ -29,7 +28,8 @@ const LiveScore: React.FC<{ match: Score }> = ({ match }) => {
   );
 };
 
-const LiveScores: React.FC<LiveScoresProps> = ({ competition, scores }) => {
+export default async function LiveScores({ competition }: LiveScoresProps) {
+  const scores = await apiClient.matchs.findAll(competition);
   return (
     <section className="section bg-transparent p-4">
       <SectionTitle title="Scores en direct" pageRef="/live-scores" />
@@ -43,6 +43,4 @@ const LiveScores: React.FC<LiveScoresProps> = ({ competition, scores }) => {
       </div>
     </section>
   );
-};
-
-export { LiveScores as default, LiveScore };
+}

@@ -1,10 +1,39 @@
-import { api, HydrateClient } from "@ln-foot/trpc/server";
 import Link from "next/link";
 import { Fragment } from "react";
-import { LiveScore } from "@components/sections/live-scores";
+import { LiveScore, type Match } from "@components/sections/live-scores";
+import { getBaseUrl } from "@ln-foot/utils";
+
+async function fetchLeagues() {
+  const baseUrl = getBaseUrl();
+  const res = await fetch(`${baseUrl}/api/trpc/leagues.list`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    console.error("Failed to fetch leagues:", res.status, res.statusText);
+    return [];
+  }
+
+  const data = (await res.json()) as Array<{
+    id: string;
+    leagueName: string;
+    logoUrl: string;
+    matches: Match[];
+  }>;
+
+  return data ?? [];
+}
 
 export default async function LiveScoresPage() {
-  const leagues = await api.leagues.list();
+  const leagues = await fetchLeagues();
+
+  if (!leagues) {
+    return <div>Failed to load live scores.</div>;
+  }
+
   const competitions = leagues.map((league) => ({
     id: league.id,
     name: league.leagueName,
@@ -13,89 +42,87 @@ export default async function LiveScoresPage() {
   }));
 
   return (
-    <HydrateClient>
-      <section className="flex items-center justify-center">
-        <div className="grid w-full gap-4 p-6 lg:w-1/2">
-          <div>
-            <div className="breadcrumbs text-sm">
-              <ul>
-                <li>
-                  <Link href="/">Home</Link>
-                </li>
-                <li>Score en direct </li>
-              </ul>
-            </div>
-            <h2 className="header-2">Score en Direct</h2>
+    <section className="flex items-center justify-center">
+      <div className="grid w-full gap-4 p-6 lg:w-1/2">
+        <div>
+          <div className="breadcrumbs text-sm">
+            <ul>
+              <li>
+                <Link href="/">Home</Link>
+              </li>
+              <li>Score en direct </li>
+            </ul>
           </div>
-          <div className="m-2 h-12 w-full">
-            <label className="input flex items-center gap-1 border-gray-300">
-              <svg
-                className="h-[1em] opacity-50"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
+          <h2 className="header-2">Score en Direct</h2>
+        </div>
+        <div className="m-2 h-12 w-full">
+          <label className="input flex items-center gap-1 border-gray-300">
+            <svg
+              className="h-[1em] opacity-50"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <g
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2.5"
+                fill="none"
+                stroke="currentColor"
               >
-                <g
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2.5"
-                  fill="none"
-                  stroke="currentColor"
-                >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </g>
-              </svg>
-              <input type="search" required placeholder="Search" />
-            </label>
-          </div>
-          <div className="tabs-border hidden md:tabs">
-            {competitions.map(({ name, scores }, i) => (
-              <Fragment key={i}>
-                <input
-                  type="radio"
-                  name="competition"
-                  className="tab"
-                  aria-label={name}
-                  defaultChecked={i === 0}
-                />
-                <div className="tab-content border-t-base-300 bg-base-100 p-10">
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                    {scores.map((match, index) => (
-                      <LiveScore key={index} match={match} />
-                    ))}
-                  </div>
-                </div>
-              </Fragment>
-            ))}
-          </div>
-          <div className="bg-base-10 join join-vertical block w-full md:hidden">
-            {competitions.map(({ name, logoUrl, scores }, i) => (
-              <div
-                className="collapse join-item collapse-arrow border-base-300"
-                key={i}
-              >
-                <input
-                  type="radio"
-                  name="competition"
-                  aria-label={name}
-                  defaultChecked={i == 0}
-                />
-                <div className="collapse-title font-semibold">
-                  <img src={logoUrl} alt={name} className="w-4 h-4" />
-                  {name}
-                </div>
-                <div className="collapse-content">
-                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                    {scores.map((match, index) => (
-                      <LiveScore key={index} match={match} />
-                    ))}
-                  </div>
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input type="search" required placeholder="Search" />
+          </label>
+        </div>
+        <div className="tabs-border hidden md:tabs">
+          {competitions.map(({ name, scores }, i) => (
+            <Fragment key={i}>
+              <input
+                type="radio"
+                name="competition"
+                className="tab"
+                aria-label={name}
+                defaultChecked={i === 0}
+              />
+              <div className="tab-content border-t-base-300 bg-base-100 p-10">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  {scores.map((match, index) => (
+                    <LiveScore key={index} match={match} />
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
+            </Fragment>
+          ))}
         </div>
-      </section>
-    </HydrateClient>
+        <div className="bg-base-10 join join-vertical block w-full md:hidden">
+          {competitions.map(({ name, logoUrl, scores }, i) => (
+            <div
+              className="collapse join-item collapse-arrow border-base-300"
+              key={i}
+            >
+              <input
+                type="radio"
+                name="competition"
+                aria-label={name}
+                defaultChecked={i == 0}
+              />
+              <div className="collapse-title font-semibold">
+                <img src={logoUrl} alt={name} className="h-4 w-4" />
+                {name}
+              </div>
+              <div className="collapse-content">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  {scores.map((match, index) => (
+                    <LiveScore key={index} match={match} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

@@ -1,11 +1,7 @@
-import { type publicities as PublicitiesTable } from "@ln-foot/server/db/schema";
+import { apiClient } from "@ln-foot/api/client";
+import type { Publicity } from "@ln-foot/api/types";
 
-export type Publicite = typeof PublicitiesTable.$inferSelect;
-type PublicitesProps = {
-  publicities: Publicite[];
-};
-
-const Publicite: React.FC<{ publicite: Publicite }> = ({ publicite }) => {
+const Publicite: React.FC<{ publicite: Publicity }> = ({ publicite }) => {
   return (
     <div className="flex w-full cursor-pointer flex-col gap-5 md:flex-row">
       <img
@@ -53,7 +49,9 @@ const Publicite: React.FC<{ publicite: Publicite }> = ({ publicite }) => {
   );
 };
 
-const Publicites: React.FC<PublicitesProps> = ({ publicities }) => {
+export default async function Publicites() {
+  const publicities = await apiClient.publicities.findAll();
+
   return (
     <section className="section bg-[#F1F0F0] p-4">
       <div className="section-title">
@@ -66,5 +64,4 @@ const Publicites: React.FC<PublicitesProps> = ({ publicities }) => {
       </div>
     </section>
   );
-};
-export { Publicites as default };
+}

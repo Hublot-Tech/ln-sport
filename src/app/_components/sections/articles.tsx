@@ -1,15 +1,12 @@
+import { apiClient } from "@ln-foot/api/client";
 import { SectionTitle } from "../common/section-title";
-import { type ecommerceArticles as EcommerceArticlesTable } from "@server/db/schema";
+import type { EcommerceArticle } from "@ln-foot/api/types";
 
-export type Article = typeof EcommerceArticlesTable.$inferSelect;
-
-type ArticlesProps = {
-  articles: Article[];
-};
-
-const Article: React.FC<{ article: Article }> = ({ article }) => {
+export const Article: React.FC<{ article: EcommerceArticle }> = ({
+  article,
+}) => {
   return (
-    <div className="cursor-pointer card max-w-md">
+    <div className="card max-w-md cursor-pointer">
       <figure>
         <img src={article.imageUrl ?? ""} alt="Article" />
       </figure>
@@ -26,7 +23,8 @@ const Article: React.FC<{ article: Article }> = ({ article }) => {
   );
 };
 
-const Articles: React.FC<ArticlesProps> = ({ articles }) => {
+export default async function Articles() {
+  const articles = await apiClient.ecommerceArticles.findAll();
   return (
     <section className="section flex flex-col gap-4 p-4">
       <SectionTitle title="Nos meilleurs articles" />
@@ -37,6 +35,4 @@ const Articles: React.FC<ArticlesProps> = ({ articles }) => {
       </div>
     </section>
   );
-};
-
-export { Articles as default };
+}

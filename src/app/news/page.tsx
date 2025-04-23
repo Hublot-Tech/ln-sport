@@ -1,18 +1,37 @@
 import { formatDate } from "@ln-foot/utils";
-import { api, HydrateClient } from "@ln-foot/trpc/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Footer from "../_components/footer";
+import { getBaseUrl } from "@ln-foot/utils";
+import { type ArticleNews } from "@components/sections/news";
+
+async function fetchNews() {
+  const baseUrl = getBaseUrl();
+  const res = await fetch(`${baseUrl}/api/trpc/news.latest`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!res.ok) {
+    console.error('Failed to fetch news:', res.status, res.statusText);
+    return [];
+  }
+
+  const data = await res.json() as  ArticleNews[];
+  return data ?? [];
+}
 
 export default async function NewsPage() {
-  const [latestNews, ...news] = await api.news.latest();
+  const newsData = await fetchNews();
 
-  if (!latestNews) {
+  if (!newsData.length) {
     return notFound();
   }
 
+  const [latestNews, ...news] = newsData;
+
   return (
-    <HydrateClient>
       <section className="lg:flex items-center justify-center">
         <div className="p-6 lg:w-1/2">
           <div className="">
@@ -37,7 +56,7 @@ export default async function NewsPage() {
               </figure>
               <div className="card-body px-0">
                 <p>{latestNews && formatDate(latestNews.publishedAt ?? new Date())}</p>
-                <p>{latestNews.summary}</p>
+                <p>{latestNews!.summary}</p>
               </div>
             </div>
           </div>
@@ -68,7 +87,5 @@ export default async function NewsPage() {
           </div>
         </div>
       </section>
-      <Footer />
-    </HydrateClient>
   );
 }

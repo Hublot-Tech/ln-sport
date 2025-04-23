@@ -1,6 +1,6 @@
 import Footer from "@components/footer";
 import { formatDate } from "@ln-foot/utils";
-import { api, HydrateClient } from "@ln-foot/trpc/server";
+import { api, HydrateClient } from "../../../../../admin-ln-foot/lib/trpc/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 

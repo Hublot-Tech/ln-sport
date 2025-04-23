@@ -1,21 +1,17 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import { SectionTitle } from "../common/section-title";
 import Link from "next/link";
-import { type highlights as HighlightsTable } from "@server/db/schema";
-
-export type Highlight = typeof HighlightsTable.$inferSelect;
-
-interface HighlightsProps {
-  highlights: Highlight[];
-}
+import type { Highlight } from "@ln-foot/api/types";
+import { apiClient } from "@ln-foot/api/client";
 
 interface HighlightItemProps {
   highlight: Highlight;
 }
 
 export const HighlightItem: React.FC<HighlightItemProps> = ({ highlight }) => {
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  "use client";
+
+  const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
 
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
@@ -101,7 +97,8 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({ highlight }) => {
   );
 };
 
-const Highlights: React.FC<HighlightsProps> = ({ highlights }) => {
+export default async function Highlights() {
+  const highlights = await apiClient.highlights.findAll();
   return (
     <section className="section mx-4 my-8 p-4">
       <SectionTitle title="Points Forts" pageRef="/highlights" />
@@ -113,6 +110,4 @@ const Highlights: React.FC<HighlightsProps> = ({ highlights }) => {
       </div>
     </section>
   );
-};
-
-export default Highlights;
+}
