@@ -1,7 +1,7 @@
 import React from "react";
 import { SectionTitle } from "../common/section-title";
 import type { Match } from "@ln-foot/api/types";
-import { apiClient } from "@ln-foot/api/client";
+import { apiClient } from "@ln-foot/api/api-client";
 
 type LiveScoresProps = {
   competition: string;

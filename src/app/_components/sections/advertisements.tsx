@@ -1,7 +1,9 @@
-import { apiClient } from "@ln-foot/api/client";
-import type { Publicity } from "@ln-foot/api/types";
+import { apiClient } from "@ln-foot/api/api-client";
+import type { Advertisement } from "@ln-foot/api/types";
 
-const Publicite: React.FC<{ publicite: Publicity }> = ({ publicite }) => {
+const Advertisement: React.FC<{ publicite: Advertisement }> = ({
+  publicite,
+}) => {
   return (
     <div className="flex w-full cursor-pointer flex-col gap-5 md:flex-row">
       <img
@@ -49,8 +51,8 @@ const Publicite: React.FC<{ publicite: Publicity }> = ({ publicite }) => {
   );
 };
 
-export default async function Publicites() {
-  const publicities = await apiClient.publicities.findAll();
+export default async function Advertisements() {
+  const advertisements = await apiClient.advertisements.findAll();
 
   return (
     <section className="section bg-[#F1F0F0] p-4">
@@ -58,8 +60,8 @@ export default async function Publicites() {
         <h3 className="header-2">Publicite</h3>
       </div>
       <div className="">
-        {publicities.map((publicity, ind) => (
-          <Publicite key={ind} publicite={publicity} />
+        {advertisements.map((advertisement, ind) => (
+          <Advertisement key={ind} publicite={advertisement} />
         ))}
       </div>
     </section>

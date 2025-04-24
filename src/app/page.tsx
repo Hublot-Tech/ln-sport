@@ -4,7 +4,7 @@ import HeroSection from "@components/sections/hero-section";
 import Highlights from "@components/sections/highlights";
 import LiveScores from "@components/sections/live-scores";
 import NewsList from "@components/sections/news";
-import Publicites from "@components/sections/Publicites";
+import Advertisements from "@ln-foot/app/_components/sections/advertisements";
 
 export default async function Home() {
   return (
@@ -15,7 +15,7 @@ export default async function Home() {
         <Highlights />
         <NewsList />
         <Articles />
-        <Publicites />
+        <Advertisements />
       </ScrollAnimation>
     </>
   );

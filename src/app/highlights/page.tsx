@@ -1,32 +1,12 @@
-import { notFound } from "next/navigation";
+import { apiClient } from "@ln-foot/api/api-client";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
-  type Highlight,
-  HighlightItem,
+  HighlightItem
 } from "../_components/sections/highlights";
-import { getBaseUrl } from "@ln-foot/utils";
-
-async function fetchHighlights() {
-  const baseUrl = getBaseUrl();
-  const res = await fetch(`${baseUrl}/api/trpc/highlights.latest`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!res.ok) {
-    console.error("Failed to fetch highlights:", res.status, res.statusText);
-    return [];
-  }
-
-  const data = (await res.json()) as Array<Highlight>;
-  // Assuming your tRPC returns data in a format like { result: {  [...] } }
-  return data ?? [];
-}
 
 export default async function HighlightsPage() {
-  const highlightsData = await fetchHighlights();
+  const highlightsData = await apiClient.highlights.findAll();
 
   if (!highlightsData.length) {
     return notFound();

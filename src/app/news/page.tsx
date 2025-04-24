@@ -1,29 +1,10 @@
 import { formatDate } from "@ln-foot/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getBaseUrl } from "@ln-foot/utils";
-import { type ArticleNews } from "@components/sections/news";
-
-async function fetchNews() {
-  const baseUrl = getBaseUrl();
-  const res = await fetch(`${baseUrl}/api/trpc/news.latest`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!res.ok) {
-    console.error('Failed to fetch news:', res.status, res.statusText);
-    return [];
-  }
-
-  const data = await res.json() as  ArticleNews[];
-  return data ?? [];
-}
+import { apiClient } from "@ln-foot/api/api-client";
 
 export default async function NewsPage() {
-  const newsData = await fetchNews();
+  const newsData = await apiClient.newsArticles.findAll();
 
   if (!newsData.length) {
     return notFound();

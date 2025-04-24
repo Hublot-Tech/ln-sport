@@ -1,4 +1,4 @@
-import { apiClient } from "@ln-foot/api/client";
+import { apiClient } from "@ln-foot/api/api-client";
 import { SectionTitle } from "../common/section-title";
 import type { EcommerceArticle } from "@ln-foot/api/types";
 

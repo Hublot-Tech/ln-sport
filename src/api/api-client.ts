@@ -1,11 +1,12 @@
 import { getBaseUrl } from "@ln-foot/utils";
 import type {
-    ApiResponse,
-    EcommerceArticle,
-    Highlight,
-    Match,
-    NewsArticle,
-    Publicity,
+  ApiResponse,
+  EcommerceArticle,
+  Highlight,
+  League,
+  Match,
+  NewsArticle,
+  Advertisement,
 } from "./types";
 
 const baseUrl = getBaseUrl();
@@ -17,25 +18,17 @@ export const apiClient = {
         result: {
           data: { json },
         },
-      } = await fetch(`${baseUrl}/api/trpc/news.latest`, {
+      } = await fetch(`${baseUrl}/api/trpc/newsArticles.latest`, {
         method: "GET",
       }).then((data) => data.json() as Promise<ApiResponse<NewsArticle[]>>);
-
+      console.log(json);
       return json;
     },
 
     async findOne(id: string) {
-      const {
-        result: {
-          data: { json },
-        },
-      } = await fetch(`${baseUrl}/api/trpc/news.findOne`, {
-        method: "GET",
-      }).then(
-        (data) => data.json() as Promise<ApiResponse<NewsArticle | undefined>>,
-      );
+      const newsArticles = await this.findAll();
 
-      return json;
+      return newsArticles.find((newsArticle) => newsArticle.id === id);
     },
   },
 
@@ -56,15 +49,9 @@ export const apiClient = {
     },
 
     async findOne(id: string) {
-      const {
-        result: {
-          data: { json },
-        },
-      } = await fetch(`${baseUrl}/api/trpc/news.findOne`, {
-        method: "GET",
-      }).then((data) => data.json() as Promise<ApiResponse<Match | undefined>>);
+      const matchs = await this.findAll();
 
-      return json;
+      return matchs.find((match) => match.id === id);
     },
   },
 
@@ -74,7 +61,7 @@ export const apiClient = {
         result: {
           data: { json },
         },
-      } = await fetch(`${baseUrl}/api/trpc/articles.latest`, {
+      } = await fetch(`${baseUrl}/api/trpc/ecommerceArticles.latest`, {
         method: "GET",
       }).then(
         (data) => data.json() as Promise<ApiResponse<EcommerceArticle[]>>,
@@ -84,18 +71,11 @@ export const apiClient = {
     },
 
     async findOne(id: string) {
-      const {
-        result: {
-          data: { json },
-        },
-      } = await fetch(`${baseUrl}/api/trpc/articles.findOne`, {
-        method: "GET",
-      }).then(
-        (data) =>
-          data.json() as Promise<ApiResponse<EcommerceArticle | undefined>>,
-      );
+      const ecommerceArticles = await this.findAll();
 
-      return json;
+      return ecommerceArticles.find(
+        (ecommerceArticle) => ecommerceArticle.id === id,
+      );
     },
   },
 
@@ -113,45 +93,49 @@ export const apiClient = {
     },
 
     async findOne(id: string) {
-      const {
-        result: {
-          data: { json },
-        },
-      } = await fetch(`${baseUrl}/api/trpc/highlights.findOne`, {
-        method: "GET",
-      }).then(
-        (data) => data.json() as Promise<ApiResponse<Highlight | undefined>>,
-      );
+      const highlights = await this.findAll();
 
-      return json;
+      return highlights.find((highlight) => highlight.id === id);
     },
   },
 
-  publicities: {
+  advertisements: {
     async findAll() {
       const {
         result: {
           data: { json },
         },
-      } = await fetch(`${baseUrl}/api/trpc/publicities.latest`, {
+      } = await fetch(`${baseUrl}/api/trpc/advertisements.latest`, {
         method: "GET",
-      }).then((data) => data.json() as Promise<ApiResponse<Publicity[]>>);
+      }).then((data) => data.json() as Promise<ApiResponse<Advertisement[]>>);
 
       return json;
     },
 
     async findOne(id: string) {
+      const advertisements = await this.findAll();
+
+      return advertisements.find((advertisement) => advertisement.id === id);
+    },
+  },
+
+  leagues: {
+    async findAll() {
       const {
         result: {
           data: { json },
         },
-      } = await fetch(`${baseUrl}/api/trpc/publicities.findOne`, {
+      } = await fetch(`${baseUrl}/api/trpc/leagues.latest`, {
         method: "GET",
-      }).then(
-        (data) => data.json() as Promise<ApiResponse<Publicity | undefined>>,
-      );
+      }).then((data) => data.json() as Promise<ApiResponse<League[]>>);
 
       return json;
+    },
+
+    async findOne(id: string) {
+      const leagues = await this.findAll();
+
+      return leagues.find((league) => league.id === id);
     },
   },
 };

@@ -76,7 +76,7 @@ export type NewsArticle = {
   apiArticleId: string | null;
 };
 
-export type Publicity = {
+export type Advertisement = {
   id: string;
   createdAt: Date;
   updatedAt: Date | null;

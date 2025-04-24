@@ -1,5 +1,5 @@
 export function getBaseUrl() {
-  return process.env.ADMIN_URL ?? "http://localhost:3000";
+  return process.env.ADMIN_PLATEFORM_URL ?? "http://localhost:3000";
 }
 
 export const formatDate = (date: Date) => {

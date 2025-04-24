@@ -2,7 +2,7 @@ import { formatDate } from "@ln-foot/utils";
 import React from "react";
 import { SectionTitle } from "../common/section-title";
 import Link from "next/link";
-import { apiClient } from "@ln-foot/api/client";
+import { apiClient } from "@ln-foot/api/api-client";
 import type { NewsArticle } from "@ln-foot/api/types";
 
 

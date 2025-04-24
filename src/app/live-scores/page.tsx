@@ -1,34 +1,11 @@
+import { LiveScore } from "@components/sections/live-scores";
+import { apiClient } from "@ln-foot/api/api-client";
 import Link from "next/link";
 import { Fragment } from "react";
-import { LiveScore, type Match } from "@components/sections/live-scores";
-import { getBaseUrl } from "@ln-foot/utils";
 
-async function fetchLeagues() {
-  const baseUrl = getBaseUrl();
-  const res = await fetch(`${baseUrl}/api/trpc/leagues.list`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (!res.ok) {
-    console.error("Failed to fetch leagues:", res.status, res.statusText);
-    return [];
-  }
-
-  const data = (await res.json()) as Array<{
-    id: string;
-    leagueName: string;
-    logoUrl: string;
-    matches: Match[];
-  }>;
-
-  return data ?? [];
-}
 
 export default async function LiveScoresPage() {
-  const leagues = await fetchLeagues();
+  const leagues = await apiClient.leagues.findAll();
 
   if (!leagues) {
     return <div>Failed to load live scores.</div>;

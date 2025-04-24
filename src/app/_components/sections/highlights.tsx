@@ -2,7 +2,7 @@ import React from "react";
 import { SectionTitle } from "../common/section-title";
 import Link from "next/link";
 import type { Highlight } from "@ln-foot/api/types";
-import { apiClient } from "@ln-foot/api/client";
+import { apiClient } from "@ln-foot/api/api-client";
 
 interface HighlightItemProps {
   highlight: Highlight;
