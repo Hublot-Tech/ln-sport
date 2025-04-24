@@ -1,5 +1,13 @@
 export function getBaseUrl() {
-  return process.env.ADMIN_PLATEFORM_URL ?? "http://localhost:3000";
+  const NEXT_API_BASE_URL = process.env.NEXT_API_BASE_URL;
+
+  if (NEXT_API_BASE_URL) {
+    return NEXT_API_BASE_URL;
+  }
+
+  return process.env.NODE_ENV === "production"
+    ? "https://admin-ln-foot.vercel.app"
+    : "http://localhost:3000";
 }
 
 export const formatDate = (date: Date) => {
