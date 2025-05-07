@@ -4,7 +4,7 @@ import type {
   EcommerceArticle,
   Highlight,
   League,
-  Match,
+  Fixtures,
   NewsArticle,
   Advertisement,
 } from "./types";
@@ -21,7 +21,6 @@ export const apiClient = {
       } = await fetch(`${baseUrl}/api/trpc/newsArticles.latest`, {
         method: "GET",
       }).then((data) => data.json() as Promise<ApiResponse<NewsArticle[]>>);
-      console.log(json);
       return json;
     },
 
@@ -35,17 +34,15 @@ export const apiClient = {
   matchs: {
     async findAll(competion?: string) {
       const {
-        result: {
-          data: { json },
-        },
+        result: { data },
       } = await fetch(
-        `${baseUrl}/api/trpc/matchs.latest?competion=${competion}`,
+        `${baseUrl}/api/trpc/fixtures.latest?competion=${competion}`,
         {
           method: "GET",
         },
-      ).then((data) => data.json() as Promise<ApiResponse<Match[]>>);
-
-      return json;
+      ).then((data) => data.json() as Promise<ApiResponse<Fixtures[]>>);
+      console.log(data)
+      return data.json ?? [];
     },
 
     async findOne(id: string) {
@@ -58,16 +55,14 @@ export const apiClient = {
   ecommerceArticles: {
     async findAll() {
       const {
-        result: {
-          data: { json },
-        },
+        result: { data },
       } = await fetch(`${baseUrl}/api/trpc/ecommerceArticles.latest`, {
         method: "GET",
       }).then(
         (data) => data.json() as Promise<ApiResponse<EcommerceArticle[]>>,
       );
 
-      return json;
+      return data.json ?? [];
     },
 
     async findOne(id: string) {
@@ -82,14 +77,12 @@ export const apiClient = {
   highlights: {
     async findAll() {
       const {
-        result: {
-          data: { json },
-        },
+        result: { data },
       } = await fetch(`${baseUrl}/api/trpc/highlights.latest`, {
         method: "GET",
       }).then((data) => data.json() as Promise<ApiResponse<Highlight[]>>);
 
-      return json;
+      return data.json ?? [];
     },
 
     async findOne(id: string) {
@@ -102,14 +95,12 @@ export const apiClient = {
   advertisements: {
     async findAll() {
       const {
-        result: {
-          data: { json },
-        },
+        result: { data },
       } = await fetch(`${baseUrl}/api/trpc/advertisements.latest`, {
         method: "GET",
       }).then((data) => data.json() as Promise<ApiResponse<Advertisement[]>>);
 
-      return json;
+      return data.json ?? [];
     },
 
     async findOne(id: string) {
@@ -122,14 +113,12 @@ export const apiClient = {
   leagues: {
     async findAll() {
       const {
-        result: {
-          data: { json },
-        },
-      } = await fetch(`${baseUrl}/api/trpc/leagues.latest`, {
+        result: { data },
+      } = await fetch(`${baseUrl}/api/trpc/leagues.list`, {
         method: "GET",
       }).then((data) => data.json() as Promise<ApiResponse<League[]>>);
-
-      return json;
+      console.log(data)
+      return data.json ?? [];
     },
 
     async findOne(id: string) {

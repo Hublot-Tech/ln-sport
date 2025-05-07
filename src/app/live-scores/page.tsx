@@ -15,7 +15,7 @@ export default async function LiveScoresPage() {
     id: league.id,
     name: league.leagueName,
     logoUrl: league.logoUrl ?? "",
-    scores: league.matches,
+    scores: league.fixtures,
   }));
 
   return (

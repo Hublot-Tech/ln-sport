@@ -1,4 +1,4 @@
-// trpc Routes ref:https://github.com/Hublot-Tech/admin-ln-foot.git 
+// trpc Routes ref:https://github.com/Hublot-Tech/admin-ln-foot.git
 export type ApiResponse<T> = {
   result: {
     data: { json: T };
@@ -44,17 +44,23 @@ export type League = {
   apiSource: string | null;
   apiLeagueId: string | null;
   logoUrl: string | null;
-  matches: Match[];
+  fixtures: Fixtures[];
 };
 
-export type Match = {
+type Team = {
+  id: string;
+  name: string;
+  logo: string;
+};
+
+export type Fixtures = {
   id: string;
   createdAt: Date;
   updatedAt: Date | null;
   apiSource: string | null;
   leagueId: string;
-  team1Id: string;
-  team2Id: string;
+  team1: Team;
+  team2: Team;
   matchDatetime: Date;
   apiMatchId: string | null;
   status: string | null;

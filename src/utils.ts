@@ -1,6 +1,5 @@
 export function getBaseUrl() {
   const NEXT_API_BASE_URL = process.env.NEXT_API_BASE_URL;
-
   if (NEXT_API_BASE_URL) {
     return NEXT_API_BASE_URL;
   }
