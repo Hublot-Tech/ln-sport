@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { SectionTitle } from "../common/section-title";
 import Link from "next/link";
 import type { Highlight } from "@ln-foot/api/types";
@@ -9,8 +10,6 @@ interface HighlightItemProps {
 }
 
 export const HighlightItem: React.FC<HighlightItemProps> = ({ highlight }) => {
-  "use client";
-
   const [isVideoLoaded, setIsVideoLoaded] = React.useState(false);
 
   const handleVideoLoad = () => {
@@ -97,8 +96,13 @@ export const HighlightItem: React.FC<HighlightItemProps> = ({ highlight }) => {
   );
 };
 
-export default async function Highlights() {
-  const highlights = await apiClient.highlights.findAll();
+export default function Highlights() {
+  const [highlights, setHighlights] = useState<Highlight[]>([]);
+
+  useEffect(() => {
+    apiClient.highlights.findAll().then(setHighlights).catch(console.error);
+  }, []);
+
   return (
     <section className="section mx-4 my-8 p-4">
       <SectionTitle title="Points Forts" pageRef="/highlights" />
