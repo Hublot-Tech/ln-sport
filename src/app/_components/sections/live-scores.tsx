@@ -82,7 +82,7 @@ export const LiveScore: React.FC<{ match: Fixtures }> = ({ match }) => {
 };
 
 export default async function LiveScores({ competition }: LiveScoresProps) {
-  const scores = await apiClient.matchs.findAll(competition);
+  const scores = await apiClient.fixtures.findAll(competition);
   return (
     <section className="section bg-transparent p-4">
       <SectionTitle title="Scores en direct" pageRef="/live-scores" />

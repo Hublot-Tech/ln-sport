@@ -1,8 +1,9 @@
+export const dynamic = "force-dynamic";
+
 import { LiveScore } from "@components/sections/live-scores";
 import { apiClient } from "@ln-foot/api/api-client";
 import Link from "next/link";
 import { Fragment } from "react";
-
 
 export default async function LiveScoresPage() {
   const leagues = await apiClient.leagues.findAll();

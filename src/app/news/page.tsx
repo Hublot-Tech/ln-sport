@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { formatDate } from "@ln-foot/utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";

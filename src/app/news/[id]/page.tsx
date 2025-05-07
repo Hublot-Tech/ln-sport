@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { apiClient } from "@ln-foot/api/api-client";
 import { formatDate } from "@ln-foot/utils";
 import Link from "next/link";

@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import ScrollAnimation from "@components/common/scoll-annimation";
 import Articles from "@components/sections/articles";
 import HeroSection from "@components/sections/hero-section";

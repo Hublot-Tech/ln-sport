@@ -11,120 +11,111 @@ import type {
 
 const baseUrl = getBaseUrl();
 
+async function safeFetch<T>(url: string): Promise<T | null> {
+  try {
+    const res = await fetch(url, {
+      method: "GET",
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      console.error(`[safeFetch] Failed with status ${res.status} for ${url}`);
+      return null;
+    }
+
+    const {
+      result: { data },
+    } = (await res.json()) as ApiResponse<T>;
+    return data.json ?? null;
+  } catch (err) {
+    console.error(`[safeFetch] Error fetching ${url}:`, err);
+    return null;
+  }
+}
+
 export const apiClient = {
   newsArticles: {
     async findAll() {
-      const {
-        result: {
-          data: { json },
-        },
-      } = await fetch(`${baseUrl}/api/trpc/newsArticles.latest`, {
-        method: "GET",
-      }).then((data) => data.json() as Promise<ApiResponse<NewsArticle[]>>);
-      return json;
+      return (
+        (await safeFetch<NewsArticle[]>(
+          `${baseUrl}/api/trpc/newsArticles.latest`,
+        )) ?? []
+      );
     },
 
     async findOne(id: string) {
-      const newsArticles = await this.findAll();
-
-      return newsArticles.find((newsArticle) => newsArticle.id === id);
+      const all = await this.findAll();
+      return all.find((el) => el.id === id);
     },
   },
 
-  matchs: {
+  fixtures: {
     async findAll(competion?: string) {
-      const {
-        result: { data },
-      } = await fetch(
-        `${baseUrl}/api/trpc/fixtures.latest?competion=${competion}`,
-        {
-          method: "GET",
-        },
-      ).then((data) => data.json() as Promise<ApiResponse<Fixtures[]>>);
-      console.log(data)
-      return data.json ?? [];
+      const url = `${baseUrl}/api/trpc/fixtures.latest?competion=${competion ?? ""}`;
+      return (await safeFetch<Fixtures[]>(url)) ?? [];
     },
 
     async findOne(id: string) {
-      const matchs = await this.findAll();
-
-      return matchs.find((match) => match.id === id);
+      const all = await this.findAll();
+      return all.find((el) => el.id === id);
     },
   },
 
   ecommerceArticles: {
     async findAll() {
-      const {
-        result: { data },
-      } = await fetch(`${baseUrl}/api/trpc/ecommerceArticles.latest`, {
-        method: "GET",
-      }).then(
-        (data) => data.json() as Promise<ApiResponse<EcommerceArticle[]>>,
+      return (
+        (await safeFetch<EcommerceArticle[]>(
+          `${baseUrl}/api/trpc/ecommerceArticles.latest`,
+        )) ?? []
       );
-
-      return data.json ?? [];
     },
 
     async findOne(id: string) {
-      const ecommerceArticles = await this.findAll();
-
-      return ecommerceArticles.find(
-        (ecommerceArticle) => ecommerceArticle.id === id,
-      );
+      const all = await this.findAll();
+      return all.find((el) => el.id === id);
     },
   },
 
   highlights: {
     async findAll() {
-      const {
-        result: { data },
-      } = await fetch(`${baseUrl}/api/trpc/highlights.latest`, {
-        method: "GET",
-      }).then((data) => data.json() as Promise<ApiResponse<Highlight[]>>);
-
-      return data.json ?? [];
+      return (
+        (await safeFetch<Highlight[]>(
+          `${baseUrl}/api/trpc/highlights.latest`,
+        )) ?? []
+      );
     },
 
     async findOne(id: string) {
-      const highlights = await this.findAll();
-
-      return highlights.find((highlight) => highlight.id === id);
+      const all = await this.findAll();
+      return all.find((el) => el.id === id);
     },
   },
 
   advertisements: {
     async findAll() {
-      const {
-        result: { data },
-      } = await fetch(`${baseUrl}/api/trpc/advertisements.latest`, {
-        method: "GET",
-      }).then((data) => data.json() as Promise<ApiResponse<Advertisement[]>>);
-
-      return data.json ?? [];
+      return (
+        (await safeFetch<Advertisement[]>(
+          `${baseUrl}/api/trpc/advertisements.latest`,
+        )) ?? []
+      );
     },
 
     async findOne(id: string) {
-      const advertisements = await this.findAll();
-
-      return advertisements.find((advertisement) => advertisement.id === id);
+      const all = await this.findAll();
+      return all.find((el) => el.id === id);
     },
   },
 
   leagues: {
     async findAll() {
-      const {
-        result: { data },
-      } = await fetch(`${baseUrl}/api/trpc/leagues.list`, {
-        method: "GET",
-      }).then((data) => data.json() as Promise<ApiResponse<League[]>>);
-      console.log(data)
-      return data.json ?? [];
+      return (
+        (await safeFetch<League[]>(`${baseUrl}/api/trpc/leagues.list`)) ?? []
+      );
     },
 
     async findOne(id: string) {
-      const leagues = await this.findAll();
-
-      return leagues.find((league) => league.id === id);
+      const all = await this.findAll();
+      return all.find((el) => el.id === id);
     },
   },
 };
