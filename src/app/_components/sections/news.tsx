@@ -17,12 +17,12 @@ export const News: React.FC<{ actuality: NewsArticle }> = ({ actuality }) => {
             alt="Football News"
           />
         </figure>
-        <div className="slide-in card-body px-0 sm:px-4">
+        <div className="slide-in card-body px-0 sm:px-4 h-14">
           <p className="">{formatDate(actuality.publishedAt ?? new Date())}</p>
           <h2 className="link-hover link card-title">
             <Link href={`/news/${actuality.id}`}>{actuality.title}</Link>
           </h2>
-          <p>{actuality.summary}</p>
+          <p>{actuality.summary?.substring(0, 20)}...</p>
         </div>
       </div>
     </div>

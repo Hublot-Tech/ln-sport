@@ -6,14 +6,27 @@ import HeroSection from "@components/sections/hero-section";
 import Highlights from "@components/sections/highlights";
 import LiveScores from "@components/sections/live-scores";
 import NewsList from "@components/sections/news";
+import { apiClient } from "@ln-foot/api/api-client";
 import Advertisements from "@ln-foot/app/_components/sections/advertisements";
 
 export default async function Home() {
+  const [latestNews] = await apiClient.newsArticles.findAll();
+  const leagues = await apiClient.leagues.findAll();
+  const league = leagues.find((l) =>
+    l.country.toLowerCase().includes("cameroon"),
+  );
+
   return (
     <>
-      <HeroSection title={"L'actualite du football en continu"} />
+      <HeroSection
+        title={latestNews?.title ?? "L'actualite du football en continu"}
+        imageUrl={latestNews?.imageUrl ?? "/hero-image.png"}
+      />
       <ScrollAnimation>
-        <LiveScores competition="All" />
+        <LiveScores
+          leagueName={league?.leagueName ?? "All"}
+          leagueId={league?.id}
+        />
         <Highlights />
         <NewsList />
         <Articles />

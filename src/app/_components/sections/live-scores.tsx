@@ -2,6 +2,7 @@ import React from "react";
 import { SectionTitle } from "../common/section-title";
 import type { Fixtures } from "@ln-foot/api/types";
 import { apiClient } from "@ln-foot/api/api-client";
+import { formatDate } from "@ln-foot/utils";
 
 const matchStatusLookup: Record<
   string,
@@ -48,7 +49,8 @@ const matchStatusLookup: Record<
 };
 
 type LiveScoresProps = {
-  competition: string;
+  leagueName: string;
+  leagueId?: string;
 };
 
 export const LiveScore: React.FC<{ match: Fixtures }> = ({ match }) => {
@@ -67,7 +69,7 @@ export const LiveScore: React.FC<{ match: Fixtures }> = ({ match }) => {
         <div>{match.score1}</div>
       </div>
       <div className="divider divider-end text-green-500">
-        {match.status}&apos;
+        {formatDate(new Date(match.matchDatetime))}&apos;
       </div>
       <div className="flex justify-between font-bold">
         <div>
@@ -76,23 +78,30 @@ export const LiveScore: React.FC<{ match: Fixtures }> = ({ match }) => {
           )}
           {match.team2.name}
         </div>
+        <div>{match.score2}</div>
       </div>
     </div>
   );
 };
 
-export default async function LiveScores({ competition }: LiveScoresProps) {
-  const scores = await apiClient.fixtures.findAll(competition);
+export default async function LiveScores({
+  leagueId,
+  leagueName,
+}: LiveScoresProps) {
+  const scores = await apiClient.fixtures.findAll();
   return (
     <section className="section bg-transparent p-4">
       <SectionTitle title="Scores en direct" pageRef="/live-scores" />
       <h3 className="mb-4 cursor-pointer bg-[#0D2648] p-4 text-3xl font-semibold uppercase text-white">
-        {competition}
+        {leagueName}
       </h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {scores.map((match, index) => (
-          <LiveScore key={index} match={match} />
-        ))}
+        {scores
+          .filter((_) => _.leagueId === leagueId)
+          .slice(0, 10)
+          .map((match, index) => (
+            <LiveScore key={index} match={match} />
+          ))}
       </div>
     </section>
   );

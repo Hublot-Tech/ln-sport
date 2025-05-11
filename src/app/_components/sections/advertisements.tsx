@@ -59,7 +59,7 @@ export default async function Advertisements() {
       <div className="section-title">
         <h3 className="header-2">Publicite</h3>
       </div>
-      <div className="">
+      <div className="grid gap-4">
         {advertisements.map((advertisement, ind) => (
           <Advertisement key={ind} publicite={advertisement} />
         ))}
