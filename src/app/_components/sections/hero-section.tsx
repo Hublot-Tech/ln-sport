@@ -11,7 +11,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ title, imageUrl }) => {
     <section
       id="hero-section"
       style={{
-        backgroundImage: `url(${imageUrl})`,
+        backgroundImage: `url('${imageUrl}')`,
       }}
       className="relative flex h-4/5 flex-col justify-center bg-contain bg-center text-center text-white"
     >

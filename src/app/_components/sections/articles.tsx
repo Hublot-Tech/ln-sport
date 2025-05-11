@@ -29,7 +29,7 @@ export default async function Articles() {
     <section className="section flex flex-col gap-4 p-4">
       <SectionTitle title="Nos meilleurs articles" />
       <div className="grid grid-flow-row justify-center gap-8 md:grid-flow-col">
-        {articles.map((acticle, index) => (
+        {articles.slice(0, 4).map((acticle, index) => (
           <Article key={index} article={acticle} />
         ))}
       </div>

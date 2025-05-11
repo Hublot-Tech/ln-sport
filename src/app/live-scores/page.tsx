@@ -7,7 +7,7 @@ import { Fragment } from "react";
 
 export default async function LiveScoresPage() {
   const leagues = await apiClient.leagues.findAll();
-
+  console.log(leagues);
   if (!leagues) {
     return <div>Failed to load live scores.</div>;
   }

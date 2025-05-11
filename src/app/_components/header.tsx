@@ -60,7 +60,7 @@ const Header: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="navbar-end hidden lg:flex">
+        <div className="navbar-end hidden lg:flex w-full">
           <ul className="menu menu-horizontal px-1">
             {navbarItems.map(({ name, path }) => (
               <li key={name}>
