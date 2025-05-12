@@ -4,7 +4,7 @@ import { apiClient } from "@ln-foot/api/api-client";
 import { formatDate } from "@ln-foot/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 interface UserPageProps {
   params: Promise<{ id: string }>;
