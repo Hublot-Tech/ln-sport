@@ -4,6 +4,7 @@ import { apiClient } from "@ln-foot/api/api-client";
 import { formatDate } from "@ln-foot/utils";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import DOMPurify from "dompurify";
 
 interface UserPageProps {
   params: Promise<{ id: string }>;
@@ -46,6 +47,12 @@ export default async function NewsPage({ params }: UserPageProps) {
                 {latestNews && formatDate(latestNews.publishedAt ?? new Date())}
               </p>
               <p>{latestNews.summary}</p>
+              <div className="divider"></div>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(latestNews.content ?? ""),
+                }}
+              ></div>
             </div>
           </div>
         </div>
