@@ -16,3 +16,13 @@ export const formatDate = (date: Date) => {
     year: "numeric",
   });
 };
+
+export const isYouTubeUrl = (url?: string | null) => {
+  return !!url?.includes("youtube.com") || !!url?.includes("youtu.be");
+};
+
+export function getYouTubeEmbedUrl(url: string): string {
+  const regex = /v=([^&]+)/;
+  const match = regex.exec(url);
+  return match ? `https://www.youtube.com/embed/${match[1]}` : "";
+}
