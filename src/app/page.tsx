@@ -19,8 +19,7 @@ export default async function Home() {
   return (
     <>
       <HeroSection
-        title={latestNews?.title ?? "L'actualite du football en continu"}
-        imageUrl={latestNews?.imageUrl ?? "/hero-image.png"}
+        latestNews={latestNews}
       />
       <ScrollAnimation>
         <LiveScores

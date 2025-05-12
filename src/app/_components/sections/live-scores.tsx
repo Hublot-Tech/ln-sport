@@ -98,7 +98,7 @@ export default async function LiveScores({
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {scores
           .filter((_) => _.leagueId === leagueId)
-          .slice(0, 10)
+          .slice(0, 5)
           .map((match, index) => (
             <LiveScore key={index} match={match} />
           ))}
