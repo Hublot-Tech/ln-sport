@@ -6,7 +6,7 @@ import Link from "next/link";
 import { apiClient } from "@ln-foot/api/api-client";
 import type { NewsArticle } from "@ln-foot/api/types";
 
-const NewsCard: React.FC<{ news: NewsArticle }> = ({ news }) => (
+export const NewsCard: React.FC<{ news: NewsArticle }> = ({ news }) => (
   <div className="group flex flex-col overflow-hidden rounded-lg shadow-md transition-transform hover:scale-105">
     <img
       src={news?.imageUrl ?? "/ln-icon.svg"}
@@ -58,7 +58,7 @@ export default async function NewsList() {
 
         {/* Secondary news */}
         <div className="grid gap-6 sm:grid-cols-2 lg:col-span-2">
-          {news.map((article, i) => (
+          {news.slice(0, 4).map((article, i) => (
             <NewsCard key={i} news={article} />
           ))}
         </div>
