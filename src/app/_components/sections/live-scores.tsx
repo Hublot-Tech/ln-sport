@@ -108,7 +108,7 @@ export default async function LiveScores({
       </h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {[...localFixtures, ...otherFixtures]
-          .slice(0, 5)
+          .slice(0, 6)
           .map((match, index) => (
             <LiveScore key={index} match={match} />
           ))}

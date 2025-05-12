@@ -15,6 +15,7 @@ export default async function Home() {
   const league = leagues.find((l) =>
     l.country.toLowerCase().includes("cameroon"),
   );
+  console.log({ league });
 
   return (
     <>
