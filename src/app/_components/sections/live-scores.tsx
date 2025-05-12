@@ -88,7 +88,18 @@ export default async function LiveScores({
   leagueId,
   leagueName,
 }: LiveScoresProps) {
-  const scores = await apiClient.fixtures.findAll();
+  const fixtures = await apiClient.fixtures.findAll();
+  const { f: otherFixtures, l: localFixtures } = fixtures.reduce<{
+    l: Array<Fixtures>;
+    f: Array<Fixtures>;
+  }>(
+    (acc, cur) =>
+      cur.leagueId === leagueId
+        ? { l: [...acc.l, cur], f: acc.f }
+        : { l: acc.l, f: [...acc.f, cur] },
+    { l: [], f: [] },
+  );
+
   return (
     <section className="section bg-transparent p-4">
       <SectionTitle title="Scores en direct" pageRef="/live-scores" />
@@ -96,8 +107,7 @@ export default async function LiveScores({
         {leagueName}
       </h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {scores
-          .filter((_) => _.leagueId === leagueId)
+        {[...localFixtures, ...otherFixtures]
           .slice(0, 5)
           .map((match, index) => (
             <LiveScore key={index} match={match} />

@@ -51,8 +51,11 @@ export const apiClient = {
 
   fixtures: {
     async findAll(competion?: string) {
-      const url = `${baseUrl}/api/trpc/fixtures.latest?competion=${competion ?? ""}`;
-      return (await safeFetch<Fixtures[]>(url)) ?? [];
+      return (
+        (await safeFetch<Fixtures[]>(
+          `${baseUrl}/api/trpc/fixtures.latest?competion=${competion ?? ""}`,
+        )) ?? []
+      );
     },
 
     async findOne(id: string) {

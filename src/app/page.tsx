@@ -18,9 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <HeroSection
-        latestNews={latestNews}
-      />
+      <HeroSection latestNews={latestNews} />
       <ScrollAnimation>
         <LiveScores
           leagueName={league?.leagueName ?? "All"}

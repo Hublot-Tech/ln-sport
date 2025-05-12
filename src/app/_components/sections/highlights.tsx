@@ -4,7 +4,6 @@ import { HighlightItem } from "./highlight-item";
 
 export default async function Highlights() {
   const highlights = await apiClient.highlights.findAll();
-  console.log(highlights)
 
   return (
     <section className="section mx-4 my-8 p-4">
