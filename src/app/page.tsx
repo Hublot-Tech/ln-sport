@@ -11,20 +11,12 @@ import Advertisements from "@ln-foot/app/_components/sections/advertisements";
 
 export default async function Home() {
   const [latestNews] = await apiClient.newsArticles.findAll();
-  const leagues = await apiClient.leagues.findAll();
-  const league = leagues.find((l) =>
-    l.country.toLowerCase().includes("cameroon"),
-  );
-  console.log({ league });
 
   return (
     <>
       <HeroSection latestNews={latestNews} />
       <ScrollAnimation>
-        <LiveScores
-          leagueName={league?.leagueName ?? "All"}
-          leagueId={league?.id}
-        />
+        <LiveScores />
         <Highlights />
         <NewsList />
         <Articles />

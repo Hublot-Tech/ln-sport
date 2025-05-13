@@ -48,11 +48,6 @@ const matchStatusLookup: Record<
   WO: "notPlayed",
 };
 
-type LiveScoresProps = {
-  leagueName: string;
-  leagueId?: string;
-};
-
 export const LiveScore: React.FC<{ match: Fixtures }> = ({ match }) => {
   return (
     <div
@@ -84,34 +79,16 @@ export const LiveScore: React.FC<{ match: Fixtures }> = ({ match }) => {
   );
 };
 
-export default async function LiveScores({
-  leagueId,
-  leagueName,
-}: LiveScoresProps) {
+export default async function LiveScores() {
   const fixtures = await apiClient.fixtures.findAll();
-  const { f: otherFixtures, l: localFixtures } = fixtures.reduce<{
-    l: Array<Fixtures>;
-    f: Array<Fixtures>;
-  }>(
-    (acc, cur) =>
-      cur.leagueId === leagueId
-        ? { l: [...acc.l, cur], f: acc.f }
-        : { l: acc.l, f: [...acc.f, cur] },
-    { l: [], f: [] },
-  );
 
   return (
     <section className="section bg-transparent p-4">
       <SectionTitle title="Scores en direct" pageRef="/live-scores" />
-      <h3 className="mb-4 cursor-pointer bg-[#0D2648] p-4 text-3xl font-semibold uppercase text-white">
-        {leagueName}
-      </h3>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        {[...localFixtures, ...otherFixtures]
-          .slice(0, 6)
-          .map((match, index) => (
-            <LiveScore key={index} match={match} />
-          ))}
+        {fixtures.slice(0, 6).map((match, index) => (
+          <LiveScore key={index} match={match} />
+        ))}
       </div>
     </section>
   );
