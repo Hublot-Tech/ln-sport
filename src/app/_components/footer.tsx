@@ -1,102 +1,117 @@
-import Image from "next/image";
-import Link from "next/link";
+import Link from "next/link"
+import Image from "next/image"
+import { FaGooglePlay } from "react-icons/fa";
 
-const Footer: React.FC = () => {
+// Service and company links arrays
+const serviceLinks = [
+  { label: "Latest News", href: "#" },
+  { label: "Match Highlights", href: "#" },
+  { label: "Player Profiles", href: "#" },
+  { label: "Team Analysis", href: "#" },
+  { label: "Upcoming Matches", href: "#" },
+  { label: "Transfer News", href: "#" },
+  { label: "Game Recaps", href: "#" },
+];
+
+const companyLinks = [
+  { label: "About Us", href: "#" },
+  { label: "Contact Us", href: "#" },
+  { label: "Privacy Policy", href: "#" },
+  { label: "Terms & Conditions", href: "#" },
+];
+
+export default function Footer() {
   return (
-    <footer className="bg-base-primary px-6 py-12 text-white">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 md:grid-cols-3">
-        <aside>
-          <Image
-            src="/ln-foot.svg"
-            alt="LN Foot Logo"
-            width={200}
-            height={80}
-            className="mb-4"
-          />
-          <p className="text-sm leading-relaxed">
-            <strong>
-              Obtenez les dernières exclusivités sur le football !
-            </strong>
+    <footer className="bg-[#0a1e3c] text-white  ">
+      {/* Logo */}
+      <div className="flex justify-between overflow-hidden">
+        <Image src={"/ln-foot.svg"} alt="Logo" width={375} height={215} className="px-2 mb-12" />
+        <Image
+          src={"/LN.png"}
+          alt="Logo"
+          width={150}
+          height={50}
+          className="hidden lg:block -rotate-15 translate-x-4 top-0 -translate-y-10 opacity-50"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 px-6 md:px-12">
+        {/* Newsletter Section */}
+        <div className="md:col-span-6">
+          <h3 className="text-2xl font-bold uppercase mb-2">
+            Obtenir les dernieres exclusivite
             <br />
-            Rejoignez notre communauté pour recevoir les mises à jour, les temps
-            forts et du contenu exclusif directement dans votre boîte de
-            réception. Suivez-nous sur les réseaux sociaux et abonnez-vous à
-            notre newsletter dès aujourd&apos;hui !
+            en matiere de foot!
+          </h3>
+          <p className="text-sm text-gray-300 mb-6 max-w-md">
+            Rejoignez notre communauté et recevez les dernières mises à jour, les points forts du jeu et du contenu
+            exclusif directement dans votre boîte de réception. suivez-nous sur les réseaux sociaux et abonnez-vous à
+            notre newsletter dès aujourd&apos;hui.
           </p>
-          <div className="mt-6">
-            <a
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link
               href="https://lnfoot-img.hublots.co/app-release/app-release.apk"
-              className="inline-block rounded-md bg-base-secondary px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#ad310f]"
+              download={true}
+              className="bg-[#f05a28] text-white px-6 py-3 rounded-md text-sm font-medium uppercase hover:bg-[#e04a18] transition-colors"
             >
-              📲 Télécharger l&apos;application
-            </a>
+              Contact nous
+            </Link>
+            <Link
+              href="#"
+              className="border border-orange-500 text-orange-500 px-6 py-3 rounded-md text-sm font-medium uppercase flex items-center gap-2 hover:bg-white/10 transition-colors"
+            >
+              <FaGooglePlay size={20} className="text-white" />
+              Téléchargez notre application
+            </Link>
           </div>
-        </aside>
+        </div>
 
-        <nav>
-          <h6 className="mb-4 text-lg font-semibold">Services</h6>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link href="/highlights" className="hover:underline">
-                Match Highlights
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="hover:underline">
-                Player Profiles
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="hover:underline">
-                Team Analysis
-              </Link>
-            </li>
-            <li>
-              <Link href="/live-scores" className="hover:underline">
-                Upcoming Matches
-              </Link>
-            </li>
-            <li>
-              <Link href="/news" className="hover:underline">
-                Transfer News
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="hover:underline">
-                Game Recaps
-              </Link>
-            </li>
-          </ul>
-        </nav>
+        {/* Empty space */}
+        <div className="hidden md:block md:col-span-2"></div>
 
-        <nav>
-          <h6 className="mb-4 text-lg font-semibold">Entreprise</h6>
+        {/* Footer Links */}
+        <div className="md:col-span-2">
           <ul className="space-y-2 text-sm">
-            <li>
-              <Link href="#" className="hover:underline">
-                À propos de nous
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="hover:underline">
-                Nous contacter
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="hover:underline">
-                Politique de confidentialité
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="hover:underline">
-                Conditions d&apos;utilisation
-              </Link>
-            </li>
+            {serviceLinks.map(link => (
+              <li key={link.label}>
+                <Link href={link.href} className="hover:text-gray-300 transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
-        </nav>
+        </div>
+
+        <div className="md:col-span-2">
+          <ul className="space-y-2 text-sm">
+            {companyLinks.map(link => (
+              <li key={link.label}>
+                <Link href={link.href} className="hover:text-gray-300 transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      {/* Divider */}
+      <div className="h-px bg-gray-700 my-8 lg:w-4xl mx-auto px-6 md:px-12"></div>
+
+      {/* Copyright */}
+      <div className="flex flex-col md:flex-row lg:w-4xl mx-auto justify-between items-center text-xs text-gray-400 pb-2 px-6 md:px-12">
+        <div>© Copyright 2025 LNFOOT</div>
+        <div className="flex gap-6 mt-4 md:mt-0">
+          <Link href="#" className="hover:text-white transition-colors">
+            Terms of Services
+          </Link>
+          <Link href="#" className="hover:text-white transition-colors">
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </footer>
-  );
-};
-
-export default Footer;
+  )
+}
