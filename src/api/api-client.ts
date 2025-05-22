@@ -29,7 +29,7 @@ async function safeFetch<T>(url: string): Promise<T | null> {
       json,
     );
 
-    return json.result?.data.json ?? json as T ?? null;
+    return json.result?.data.json ?? (json as T) ?? null;
   } catch (err) {
     console.error(`[safeFetch] Error fetching ${url}:`, err);
     return null;
@@ -69,11 +69,11 @@ export const apiClient = {
 
   ecommerceArticles: {
     async findAll() {
-      return ( [] as EcommerceArticle[] );
-        // (await safeFetch<EcommerceArticle[]>(
-        //   `https://lnfoot-api.hublots.co/api/products`,
-        // )) ?? []
-      // );
+      return (
+        (await safeFetch<EcommerceArticle[]>(
+          `https://lnfoot-api.hublots.co/api/products`,
+        )) ?? []
+      );
     },
 
     async findOne(id: string) {
