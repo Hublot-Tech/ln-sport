@@ -6,17 +6,15 @@ export type ApiResponse<T> = {
 };
 
 export type EcommerceArticle = {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date | null;
-  title: string;
-  publishedAt: Date | null;
-  content: string | null;
-  summary: string | null;
-  imageUrl: string | null;
-  sourceUrl: string | null;
-  price: string | null;
-  ecommerceId: string | null;
+  id?: string;
+  imageUrl?: string;
+  file?: Blob | File;
+  name?: string;
+  description?: string;
+  price: number;
+  stockQuantity?: number;
+  categoryNames?: Array<string>;
+  sizes?: Array<string>;
 };
 
 export type Highlight = {
@@ -80,6 +78,7 @@ export type NewsArticle = {
   imageUrl: string | null;
   sourceUrl: string | null;
   apiArticleId: string | null;
+  isMajorUpdate: boolean | null;
 };
 
 export type Advertisement = {
