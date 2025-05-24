@@ -1,4 +1,4 @@
-name: Build, Push & Deploy Landing App
+name: Build, Push & Deploy Next.js App
 
 on:
   push:
@@ -50,7 +50,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:latest
-            ghcr.io/${{ github.repository }}:${{ env.IMAGE_TAG }}
+            ghcr.io/${{ github.repository }}:${{ github.run_number }}
           target: runner
 
   deploy:
