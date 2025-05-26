@@ -49,31 +49,59 @@ const matchStatusLookup: Record<
 };
 
 export const LiveScore: React.FC<{ match: Fixtures }> = ({ match }) => {
+  const statusType = matchStatusLookup[match.status!] ?? "scheduled";
+
   return (
     <div
-      className={`grid ${matchStatusLookup[match.status!] === "inPlay" ? "animate-pulse" : ""} rounded-lg border bg-[#F1F0F0] p-4`}
+      className={`rounded-xl bg-white p-4 shadow-md transition hover:shadow-lg ${
+        statusType === "inPlay" ? "animate-pulse ring ring-orange-400" : ""
+      }`}
     >
-      <div>{match.status}</div>
-      <div className="flex justify-between font-bold">
-        <div>
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-sm font-semibold uppercase text-gray-500">
+          {formatDate(new Date(match.matchDatetime))}
+        </span>
+        <span
+          className={`rounded-full px-2 py-1 text-xs font-semibold ${
+            statusType === "inPlay"
+              ? "bg-orange-500 text-white"
+              : statusType === "finished"
+                ? "bg-green-600 text-white"
+                : "bg-gray-300 text-gray-800"
+          }`}
+        >
+          {match.status}
+        </span>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
           {match.team1.logo && (
-            <img width={50} src={match.team1.logo} alt={match.team1.name} />
+            <img
+              className="h-6 w-6"
+              src={match.team1.logo}
+              alt={match.team1.name}
+            />
           )}
-          {match.team1.name}
+          <span className="font-medium">{match.team1.name}</span>
         </div>
-        <div>{match.score1}</div>
+        <span className="text-lg font-bold">{match.score1}</span>
       </div>
-      <div className="divider divider-end text-green-500">
-        {formatDate(new Date(match.matchDatetime))}&apos;
-      </div>
-      <div className="flex justify-between font-bold">
-        <div>
+
+      <div className="my-2 h-px bg-gray-300" />
+
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
           {match.team2.logo && (
-            <img width={50} src={match.team2.logo} alt={match.team2.name} />
+            <img
+              className="h-6 w-6"
+              src={match.team2.logo}
+              alt={match.team2.name}
+            />
           )}
-          {match.team2.name}
+          <span className="font-medium">{match.team2.name}</span>
         </div>
-        <div>{match.score2}</div>
+        <span className="text-lg font-bold">{match.score2}</span>
       </div>
     </div>
   );

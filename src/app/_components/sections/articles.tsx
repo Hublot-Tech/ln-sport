@@ -11,8 +11,8 @@ export const Article: React.FC<{ article: EcommerceArticle }> = ({
         <img src={article.imageUrl ?? ""} alt="Article" />
       </figure>
       <div className="card-body px-0">
-        <h2 className="card-title">{article.title}</h2>
-        <p>{article.summary}</p>
+        <h2 className="card-title">{article.name}</h2>
+        <p>{article.description}</p>
         <div className="card-actions">
           <button className="btn btn-outline w-full bg-base-secondary text-white">
             Acheter

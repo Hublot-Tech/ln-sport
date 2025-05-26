@@ -1,39 +1,69 @@
-import React from "react";
-import Header from "../header";
+"use client";
+import { useEffect, useState } from "react";
 import type { NewsArticle } from "@ln-foot/api/types";
+import Header from "../header";
 
 type HeroSectionProps = {
-  latestNews?: NewsArticle;
+  latestNews: NewsArticle[];
 };
 
 const HeroSection: React.FC<HeroSectionProps> = ({ latestNews }) => {
-  const backgroundImage = latestNews?.imageUrl ?? "/hero-image.png";
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Autoplay every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % latestNews.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [latestNews.length]);
 
   return (
-    <section
-      id="hero-section"
-      className="relative h-screen w-full bg-cover bg-center text-white"
-      style={{ backgroundImage: `url('${backgroundImage}')` }}
-    >
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-blue-950/80 to-blue-900/90 backdrop-blur-sm" />
-
-      <div className="relative z-10 flex h-full w-full flex-col justify-between px-6 py-8 sm:px-12 md:px-20 lg:px-32">
+    <section className="relative h-screen w-full overflow-hidden text-white">
+      {/* ✅ Header fixed but pushed down */}
+      <div className="absolute left-0 right-0 top-6 z-20">
         <Header />
+      </div>
 
-        <div className="flex flex-1 flex-col items-center justify-center gap-6 text-center">
-          <h2 className="text-3xl font-bold uppercase leading-tight sm:text-4xl md:text-5xl w-full max-w-3xl">
-            {latestNews?.title ?? "Dernières actualités sportives"}
-          </h2>
+      {/* ✅ Carousel container */}
+      <div className="carousel h-full w-full">
+        {latestNews.map((item, index) => (
+          <div
+            key={index}
+            className={`carousel-item absolute h-full w-full transition-opacity duration-1000 ease-in-out ${
+              index === currentSlide ? "z-10 opacity-100" : "z-0 opacity-0"
+            } bg-cover bg-center`}
+            style={{
+              backgroundImage: `url('${item.imageUrl ?? "/hero-image.png"}')`,
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent" />
+            <div className="relative z-20 flex h-full w-full flex-col items-start justify-center gap-6 px-6 py-8 sm:px-12 md:px-20 lg:px-32">
+              <h2 className="max-w-2xl text-3xl font-bold uppercase leading-tight sm:text-4xl md:text-5xl">
+                {item.title}
+              </h2>
+              <a
+                href={`/news/${item.id}`}
+                className="inline-block rounded-lg bg-[#F3653D] px-6 py-3 text-base font-semibold transition hover:bg-[#F3653D]/90"
+              >
+                En savoir plus
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
 
-          {latestNews && (
-            <a
-              href={`/news/${latestNews.id}`}
-              className="mt-4 inline-block rounded-lg bg-[#F3653D] px-6 py-3 text-base font-semibold transition hover:bg-[#F3653D]/90"
-            >
-              En savoir plus
-            </a>
-          )}
-        </div>
+      {/* ✅ Navigation Buttons */}
+      <div className="absolute bottom-10 left-1/2 z-30 flex -translate-x-1/2 gap-3">
+        {latestNews.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentSlide(i)}
+            className={`h-3 w-3 rounded-full ${
+              i === currentSlide ? "bg-white" : "bg-white/40"
+            } transition`}
+          />
+        ))}
       </div>
     </section>
   );

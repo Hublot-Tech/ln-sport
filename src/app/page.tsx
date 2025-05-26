@@ -10,11 +10,14 @@ import { apiClient } from "@ln-foot/api/api-client";
 import Advertisements from "@ln-foot/app/_components/sections/advertisements";
 
 export default async function Home() {
-  const [latestNews] = await apiClient.newsArticles.findAll();
+  const latestNews = await apiClient.newsArticles.findAll();
+  const majorUpdates = latestNews.filter((l) => l.isMajorUpdate);
 
   return (
     <>
-      <HeroSection latestNews={latestNews} />
+      <HeroSection
+        latestNews={majorUpdates.length ? majorUpdates : latestNews}
+      />
       <ScrollAnimation>
         <LiveScores />
         <Highlights />
